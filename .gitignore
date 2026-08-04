@@ -1,0 +1,75 @@
+# AVE Generator
+# Keep source code, recipes, manifests, documentation, and small fixtures.
+# Exclude generated media, local environments, caches, and machine-specific files.
+
+# Generated audio/video artifacts
+output/*
+!output/.gitkeep
+outputs/
+renders/
+artifacts/
+
+# Audio and video are generated or externally sourced unless explicitly
+# allow-listed as a small test fixture in a future fixtures/ directory.
+*.wav
+*.mp3
+*.flac
+*.m4a
+*.aac
+*.ogg
+*.opus
+*.aiff
+*.aif
+*.mp4
+*.mov
+*.mkv
+*.avi
+*.webm
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+dist/
+build/
+*.egg-info/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+local_config.py
+secrets/
+*.pem
+*.key
+
+# Editor and operating-system files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+desktop.ini
+
+# Logs, temporary files, and manual backups
+*.log
+*.tmp
+*.temp
+*.bak
+*.backup
