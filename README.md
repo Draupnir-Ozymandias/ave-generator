@@ -1,8 +1,39 @@
 # AVE Generator
 
-AVE Generator contains a deterministic, device-neutral four-region light renderer for offline engineering analysis. It validates a versioned recipe, resolves it onto a 60 or 120 Hz virtual frame clock, writes a pre-render manifest, and renders a four-quadrant MP4 from that resolved plan.
+AVE Generator contains deterministic, recipe-driven audio and four-region light renderers for offline engineering analysis. Both resolve versioned JSON onto monotonic timelines, write pre-render provenance, and render only from validated parameters.
 
-The repository also retains an earlier audiovisual prototype in `main.py`. That file is an isolated historical baseline: it renders at import time and has a known time-varying audio phase error. The four-region package never imports or executes it.
+The original import-time audiovisual prototype and its time-varying phase defect remain preserved in Git history at commit `b31dba4`. The current `main.py` is a guarded compatibility entry point and does nothing when imported.
+
+## Corrected audio baseline
+
+The `ave_audio_generator` package completes the implementation portion of audio Milestone 0:
+
+- a versioned baseline protocol and resolved protocol written before synthesis;
+- exclusive discrete frequency accumulation across chunk boundaries, never `f(t) * t`;
+- an explicit `fundamental_only` binaural harmonic policy;
+- deterministic 44.1 kHz stereo PCM with click-free endpoint fades and 0.9 digital peak headroom;
+- black-box checks for duration, routing, carrier, binaural difference, modulation, clipping, endpoints, and audio/visual clock agreement;
+- optional checked offline video rendering and FFmpeg muxing; and
+- optional AVE Forensics execution with input/evidence hashes and claim-level agreement recorded in the manifest.
+
+Run the complete 10- and 180-second audio acceptance workflow:
+
+```bash
+.venv/bin/python -m ave_audio_generator milestone0 \
+  --output-dir output/milestone-0 \
+  --forensics-repo ../ave_forensics
+```
+
+The 180-second Forensics pass verifies the exact WAV identity, persistent 528/1056/1584/2112 Hz carrier structure, and the early binaural-difference ramp through its time-resolved timeline. The current Forensics configuration does not independently reconstruct the later continuous isochronic and harmonic modulation ramps; the Generator’s black-box signal probes cover those programmed values, and this division of coverage is explicit in the manifest.
+
+Render and mux the guarded audiovisual baseline explicitly:
+
+```bash
+.venv/bin/python main.py render \
+  contracts/examples/baseline-audio-protocol.json \
+  --duration 10 --with-video \
+  --output-dir output/audio-av-preview
+```
 
 ## Four-region architecture
 
@@ -27,6 +58,9 @@ Key paths:
 - `contracts/examples/lumenate/` — aligned validation fixture and intentionally incomplete empirical provenance fixture.
 - `ave_light_renderer/` — validator, compiler, strict adapter, manifest builder, renderer, and CLI.
 - `tests/` — contract, timing, gating, independence, adapter, manifest, and renderer tests.
+- `contracts/ave-audio-protocol-1.0.0.schema.json` — corrected audio-baseline contract.
+- `contracts/examples/baseline-audio-protocol.json` — frozen 180-second engineering sweep.
+- `ave_audio_generator/` — audio resolver, accumulated-phase synthesis, verification, manifests, optional video/muxing, and Forensics runner.
 
 ## Recipe and timing model
 
@@ -99,7 +133,7 @@ Individual operations:
 .venv/bin/python -m pytest -q
 ```
 
-The suite covers semantic validation, incomplete-input rejection, deterministic hashes and pixels, interval boundaries and off behavior, accumulated phase, duty gating, independent regions, 60/120 Hz quantization, exact vendored hashes, Lumenate provenance preservation, and render manifests.
+The suite covers both renderers: semantic validation, incomplete-input rejection, deterministic hashes and pixels, interval boundaries and off behavior, accumulated phase and chunk continuity, duty gating, stereo routing, headroom and fades, independent visual regions, 60/120 Hz quantization, Forensics agreement evaluation, exact vendored hashes, Lumenate provenance preservation, and render manifests.
 
 ## Adapter boundary
 

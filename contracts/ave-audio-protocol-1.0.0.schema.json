@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/ave-generator/contracts/ave-audio-protocol-1.0.0.schema.json",
+  "title": "AVE Corrected Audio Baseline Protocol",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "protocol_id", "duration_seconds", "sample_rate_hz", "random_seed", "synthesis", "output", "safety", "limitations"],
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "protocol_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*$"},
+    "duration_seconds": {"type": "number", "exclusiveMinimum": 0},
+    "sample_rate_hz": {"type": "integer", "minimum": 8000, "maximum": 192000},
+    "random_seed": {"type": "integer", "minimum": 0},
+    "synthesis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["carrier_hz", "sweep", "transition_bands_hz", "harmonics", "binaural", "isochronic_frequency_range_hz"],
+      "properties": {
+        "carrier_hz": {"type": "number", "exclusiveMinimum": 0},
+        "sweep": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "start_hz", "end_hz"],
+          "properties": {
+            "kind": {"const": "linear"},
+            "start_hz": {"type": "number", "minimum": 0},
+            "end_hz": {"type": "number", "exclusiveMinimum": 0}
+          }
+        },
+        "transition_bands_hz": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["binaural_to_isochronic", "isochronic_to_harmonic"],
+          "properties": {
+            "binaural_to_isochronic": {"$ref": "#/$defs/frequency_pair"},
+            "isochronic_to_harmonic": {"$ref": "#/$defs/frequency_pair"}
+          }
+        },
+        "harmonics": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["multiple", "amplitude"],
+            "properties": {
+              "multiple": {"type": "integer", "minimum": 1},
+              "amplitude": {"type": "number", "exclusiveMinimum": 0, "maximum": 1}
+            }
+          }
+        },
+        "binaural": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["max_difference_hz", "harmonic_policy"],
+          "properties": {
+            "max_difference_hz": {"type": "number", "exclusiveMinimum": 0},
+            "harmonic_policy": {"const": "fundamental_only"}
+          }
+        },
+        "isochronic_frequency_range_hz": {"$ref": "#/$defs/frequency_pair"}
+      }
+    },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["format", "sample_encoding", "peak_linear", "fade_seconds"],
+      "properties": {
+        "format": {"const": "wav"},
+        "sample_encoding": {"const": "pcm_s16le"},
+        "peak_linear": {"type": "number", "exclusiveMinimum": 0, "maximum": 0.99},
+        "fade_seconds": {"type": "number", "minimum": 0}
+      }
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["calibrated_spl", "human_exposure_approved"],
+      "properties": {
+        "calibrated_spl": {"const": false},
+        "human_exposure_approved": {"const": false}
+      }
+    },
+    "limitations": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}}
+  },
+  "$defs": {
+    "frequency_pair": {
+      "type": "array",
+      "prefixItems": [
+        {"type": "number", "minimum": 0},
+        {"type": "number", "exclusiveMinimum": 0}
+      ],
+      "items": false
+    }
+  }
+}

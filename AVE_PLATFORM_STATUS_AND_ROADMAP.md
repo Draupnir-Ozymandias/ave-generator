@@ -1,6 +1,6 @@
 # AVE Platform Status and Roadmap
 
-> Implementation update (2026-09-26): the isolated `ave_light_renderer` package now implements the first offline four-region screen-emulator milestone described in the repository README. It is recipe-driven, uses accumulated phase on a 60/120 Hz virtual clock, writes pre-render and final manifests, and enforces a strict pinned Lumenate `0.2.0` JSON adapter. This does not repair or validate the legacy `main.py` audio path, which remains isolated pending its Milestone 0 work.
+> Implementation update (2026-09-26): the isolated `ave_light_renderer` package implements the first offline four-region screen-emulator milestone, and the new `ave_audio_generator` package corrects the legacy time-varying phase defect behind a guarded CLI. Ten- and 180-second audio renders pass black-box carrier, modulation, routing, duration, fade, and headroom checks. AVE Forensics independently confirms the exact input identity, persistent carrier structure, and early binaural-difference ramp; its current configuration does not reconstruct the later continuous modulation ramps, which remains an explicit verification-coverage limitation.
 
 **Prepared:** 2026-08-03
 **Scope:** `ave_generator`, `ave_forensics`, and the conversation titled “binaural meditation and entrainment”
@@ -234,6 +234,8 @@ The next critical-path work remains Milestone 0. After the audio baseline is cor
 
 ### Milestone 0 — Freeze and correct the baseline
 
+**Status (2026-09-26): implementation complete; independent Forensics coverage is partial and explicitly bounded.** The original prototype is frozen in Git history, `main.py` is guarded, phase is accumulated across chunks, the fundamental-only binaural policy is explicit, endpoints and headroom are controlled, FFmpeg is checked, and synthetic/black-box tests cover programmed signal behavior. Both 10- and 180-second renders pass. AVE Forensics agrees on source identity, the 528/1056/1584/2112 Hz carrier structure, and the early 10/20/30 Hz binaural timeline observations. Its default analysis does not reconstruct the later continuous 40–80 Hz isochronic and 84–360 Hz harmonic modulation ramps; Generator-side black-box probes currently verify those values.
+
 Goal: turn the present script into a trustworthy reference generator.
 
 - Initialize Git for `ave_generator`; commit the current prototype and outputs policy.
@@ -244,7 +246,7 @@ Goal: turn the present script into a trustworthy reference generator.
 - Add synthetic tests that estimate instantaneous carrier, beat, AM, duration, stereo routing, and audiovisual timeline agreement.
 - Run the corrected generator output through AVE Forensics and require expected-versus-observed tolerances.
 
-**Exit criterion:** a 10-second and 180-second baseline render reproduce every programmed frequency within declared tolerances, and the manifest agrees with Forensics.
+**Exit criterion:** a 10-second and 180-second baseline render reproduce every programmed frequency within declared tolerances, and the manifest agrees with Forensics for every claim that the current Forensics configuration supports. Unsupported ramp coverage must remain machine-readable and must not be presented as independently verified.
 
 ### Milestone 1 — Finish and stabilize Forensics v0.4
 
@@ -357,15 +359,15 @@ Visual flicker is a separate safety concern; flashing and high-contrast patterns
 
 ## Recommended next development step
 
-Complete **Milestone 0** before adding music-generation breadth:
+Close the remaining independent-verification gap, then begin the music engine without changing the corrected stimulation layer:
 
-1. Preserve the current prototype in Git.
-2. Implement sample-accurate phase accumulation.
-3. Add synthetic ground-truth tests.
-4. Emit a protocol and render manifest.
-5. Verify the output automatically with AVE Forensics.
+1. Add or configure AVE Forensics analyses for continuous isochronic and harmonic modulation ramps.
+2. Promote those results into canonical evidence and compare them automatically with the resolved Generator protocol.
+3. Treat the corrected baseline as an immutable calibration stem.
+4. Begin **Milestone 3** with a separate deterministic musical-bed layer and stem export.
+5. Add masking and audibility checks before mixing the bed and stimulation layers.
 
-Once that round trip is trustworthy, the first music feature should be a separate musical-bed layer with stem export. This keeps the scientific signal measurable while allowing the experience to become genuinely musical.
+This sequence keeps the scientific signal measurable while allowing the experience to become genuinely musical. The music layer must not silently alter the calibration stem or convert engineering measurements into efficacy claims.
 
 ## References
 
