@@ -1,0 +1,68 @@
+{
+  "schema_version": "1.0.0",
+  "recipe_id": "synthetic-four-region-demo",
+  "renderer_version": "0.1.0",
+  "source": {
+    "kind": "synthetic",
+    "source_id": "ave-generator-synthetic-four-region-v1",
+    "sha256": "ccb9375720128fd171edd11979309936a3f1d83bda57e2863a806d1e7b3b0262"
+  },
+  "clock": {
+    "kind": "monotonic_virtual",
+    "unit": "us",
+    "origin_us": 0
+  },
+  "duration_us": 4000000,
+  "output": {
+    "color_mode": "rgb",
+    "background_rgb": [0, 0, 0]
+  },
+  "safety": {
+    "offline_only": true,
+    "photosensitivity_warning": "Offline preview may contain rapidly changing light. Do not use for real-time exposure.",
+    "calibrated_intensity": false
+  },
+  "regions": [
+    {
+      "name": "top_left",
+      "intervals": [
+        {"interval_id": "tl-off-start", "kind": "off", "start_us": 0, "end_us": 500000},
+        {"interval_id": "tl-constant", "kind": "pulse", "start_us": 500000, "end_us": 2000000, "frequency_hz": {"kind": "constant", "value": 6.0}, "duty_cycle": {"kind": "constant", "value": 0.5}, "intensity": {"kind": "constant", "value": 0.65}, "color": {"mode": "rgb", "value": [255, 80, 20]}, "phase_policy": "reset", "phase_origin_cycles": 0.0},
+        {"interval_id": "tl-ramp", "kind": "pulse", "start_us": 2000000, "end_us": 3500000, "frequency_hz": {"kind": "linear", "start": 6.0, "end": 12.0}, "duty_cycle": {"kind": "linear", "start": 0.5, "end": 0.3}, "intensity": {"kind": "linear", "start": 0.65, "end": 0.9}, "color": {"mode": "rgb", "value": [255, 80, 20]}, "phase_policy": "continuous", "phase_origin_cycles": 0.0},
+        {"interval_id": "tl-off-end", "kind": "off", "start_us": 3500000, "end_us": 4000000}
+      ]
+    },
+    {
+      "name": "top_right",
+      "intervals": [
+        {"interval_id": "tr-off-start", "kind": "off", "start_us": 0, "end_us": 500000},
+        {"interval_id": "tr-constant", "kind": "pulse", "start_us": 500000, "end_us": 2000000, "frequency_hz": {"kind": "constant", "value": 6.0}, "duty_cycle": {"kind": "constant", "value": 0.5}, "intensity": {"kind": "constant", "value": 0.65}, "color": {"mode": "rgb", "value": [40, 160, 255]}, "phase_policy": "reset", "phase_origin_cycles": 0.25},
+        {"interval_id": "tr-ramp", "kind": "pulse", "start_us": 2000000, "end_us": 3500000, "frequency_hz": {"kind": "linear", "start": 6.0, "end": 12.0}, "duty_cycle": {"kind": "linear", "start": 0.5, "end": 0.3}, "intensity": {"kind": "linear", "start": 0.65, "end": 0.9}, "color": {"mode": "rgb", "value": [40, 160, 255]}, "phase_policy": "continuous", "phase_origin_cycles": 0.25},
+        {"interval_id": "tr-off-end", "kind": "off", "start_us": 3500000, "end_us": 4000000}
+      ]
+    },
+    {
+      "name": "bottom_left",
+      "intervals": [
+        {"interval_id": "bl-off-start", "kind": "off", "start_us": 0, "end_us": 500000},
+        {"interval_id": "bl-constant", "kind": "pulse", "start_us": 500000, "end_us": 2000000, "frequency_hz": {"kind": "constant", "value": 6.0}, "duty_cycle": {"kind": "constant", "value": 0.5}, "intensity": {"kind": "constant", "value": 0.65}, "color": {"mode": "rgb", "value": [120, 255, 80]}, "phase_policy": "reset", "phase_origin_cycles": 0.5},
+        {"interval_id": "bl-ramp", "kind": "pulse", "start_us": 2000000, "end_us": 3500000, "frequency_hz": {"kind": "linear", "start": 6.0, "end": 12.0}, "duty_cycle": {"kind": "linear", "start": 0.5, "end": 0.3}, "intensity": {"kind": "linear", "start": 0.65, "end": 0.9}, "color": {"mode": "rgb", "value": [120, 255, 80]}, "phase_policy": "continuous", "phase_origin_cycles": 0.5},
+        {"interval_id": "bl-off-end", "kind": "off", "start_us": 3500000, "end_us": 4000000}
+      ]
+    },
+    {
+      "name": "bottom_right",
+      "intervals": [
+        {"interval_id": "br-off-start", "kind": "off", "start_us": 0, "end_us": 500000},
+        {"interval_id": "br-divergent", "kind": "pulse", "start_us": 500000, "end_us": 2000000, "frequency_hz": {"kind": "constant", "value": 9.0}, "duty_cycle": {"kind": "constant", "value": 0.25}, "intensity": {"kind": "constant", "value": 0.45}, "color": {"mode": "rgb", "value": [220, 80, 255]}, "phase_policy": "reset", "phase_origin_cycles": 0.0},
+        {"interval_id": "br-ramp", "kind": "pulse", "start_us": 2000000, "end_us": 3500000, "frequency_hz": {"kind": "linear", "start": 9.0, "end": 4.0}, "duty_cycle": {"kind": "linear", "start": 0.25, "end": 0.6}, "intensity": {"kind": "linear", "start": 0.45, "end": 0.75}, "color": {"mode": "rgb", "value": [220, 80, 255]}, "phase_policy": "reset", "phase_origin_cycles": 0.125},
+        {"interval_id": "br-off-end", "kind": "off", "start_us": 3500000, "end_us": 4000000}
+      ]
+    }
+  ],
+  "limitations": [
+    "Synthetic engineering fixture only.",
+    "Intensity values are normalized software values, not calibrated luminance.",
+    "No neurological, therapeutic, safety, or device-equivalence claim is made."
+  ]
+}

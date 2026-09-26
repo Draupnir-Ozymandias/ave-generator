@@ -1,0 +1,150 @@
+{
+  "schema_version": "0.2.0",
+  "ave_evidence_schema_version": "1.0.0",
+  "export_id": "ln_fedcba9876543210",
+  "created_at": "2026-09-16T12:00:00Z",
+  "device": {
+    "product": "Lumenate Nova",
+    "app_package": "com.lumenate.lumenateaa",
+    "app_version": "7.0.0",
+    "app_version_code": 380,
+    "firmware_version": null
+  },
+  "session": {
+    "session_id": "synthetic-aligned-fixture",
+    "title": null,
+    "duration_ms": 1000,
+    "light_timeline_origin": {
+      "clock_id": "app-callback-clock",
+      "time_ms": 120,
+      "definition": "First synthetic session callback defines light time zero.",
+      "evidence_ids": ["ave_fedcba9876543210"]
+    },
+    "audio_timeline_origin": {
+      "clock_id": "audio-position-clock",
+      "time_ms": 0,
+      "definition": "Beginning of the synthetic associated audio asset.",
+      "evidence_ids": ["ave_fedcba9876543210"]
+    }
+  },
+  "audio_asset": {
+    "identity_status": "verified",
+    "source_id": "synthetic-audio-fixture",
+    "role": "session_audio",
+    "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "duration_ms": 1000,
+    "sample_rate_hz": 48000,
+    "limitations": ["Synthetic identity metadata; no commercial media is included."]
+  },
+  "clocks": [
+    {
+      "clock_id": "app-callback-clock",
+      "kind": "app_callback",
+      "monotonic": true,
+      "unit": "ms",
+      "origin": "Synthetic app process monotonic clock.",
+      "resolution_ms": 1,
+      "evidence_ids": ["ave_fedcba9876543210"]
+    },
+    {
+      "clock_id": "audio-position-clock",
+      "kind": "media_position",
+      "monotonic": true,
+      "unit": "ms",
+      "origin": "Synthetic decoded media position.",
+      "resolution_ms": 0.0208333333,
+      "evidence_ids": ["ave_fedcba9876543210"]
+    }
+  ],
+  "segments": [
+    {
+      "segment_id": "segment-001",
+      "start_ms": 0,
+      "end_ms": 500,
+      "execution_layer": "session_declaration",
+      "intensity": 0.5,
+      "color_rgb": [255, 128, 0],
+      "pulse": {"frequency_hz": 8, "duty_cycle": 0.5, "on_ms": 62.5, "off_ms": 62.5, "shape": "square", "shape_detail": null},
+      "overlap_with_segment_ids": [],
+      "command_ids": ["command-001"],
+      "evidence_ids": ["ave_fedcba9876543210"]
+    },
+    {
+      "segment_id": "segment-002",
+      "start_ms": 500,
+      "end_ms": 1000,
+      "execution_layer": "session_declaration",
+      "intensity": 0.75,
+      "color_rgb": [255, 128, 0],
+      "pulse": {"frequency_hz": 10, "duty_cycle": 0.5, "on_ms": 50, "off_ms": 50, "shape": "interpolated", "shape_detail": "Synthetic classification."},
+      "overlap_with_segment_ids": [],
+      "command_ids": [],
+      "evidence_ids": ["ave_fedcba9876543210"]
+    }
+  ],
+  "transitions": [
+    {
+      "transition_id": "transition-001",
+      "type": "step",
+      "start_ms": 500,
+      "end_ms": 500,
+      "from_segment_id": "segment-001",
+      "to_segment_id": "segment-002",
+      "execution_layer": "session_declaration",
+      "parameters": {"changed_fields": ["intensity", "pulse.frequency_hz"]},
+      "evidence_ids": ["ave_fedcba9876543210"]
+    }
+  ],
+  "commands": [
+    {
+      "command_id": "command-001",
+      "clock_id": "app-callback-clock",
+      "time_ms": 120,
+      "direction": "app_to_device",
+      "execution_layer": "ble_transport",
+      "service_uuid": null,
+      "characteristic_uuid": "00000000-0000-0000-0000-000000000001",
+      "payload_hex": null,
+      "interpretation": "Synthetic start command; literal payload intentionally omitted.",
+      "evidence_ids": ["ave_fedcba9876543210"]
+    }
+  ],
+  "sync_anchors": [
+    {
+      "anchor_id": "anchor-001",
+      "from_clock_id": "app-callback-clock",
+      "from_time_ms": 120,
+      "to_clock_id": "audio-position-clock",
+      "to_time_ms": 0,
+      "uncertainty_ms": 5,
+      "method": "Synthetic simultaneous start event.",
+      "evidence_ids": ["ave_fedcba9876543210"]
+    }
+  ],
+  "provenance": {
+    "source_hashes": [
+      {"source_id": "synthetic-source", "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"},
+      {"source_id": "synthetic-audio-fixture", "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
+    ],
+    "acquisition_notes": ["Synthetic contract fixture; not a reconstructed session."]
+  },
+  "confidence": {"level": "L1", "score": 0.5, "method": "Synthetic fixture."},
+  "limitations": ["All values are synthetic and must not be presented as empirical evidence."],
+  "ave_evidence": [
+    {
+      "schema_version": "1.0.0",
+      "evidence_id": "ave_fedcba9876543210",
+      "evidence_level": "measurement",
+      "evidence_type": "synthetic_alignment_fixture",
+      "source_module": "lumenate_nova.contract_fixture",
+      "summary": "Synthetic evidence used to exercise the complete released contract.",
+      "scope": {"channels": ["light", "audio"], "time_range_seconds": {"start": 0, "end": 1}},
+      "measurements": [{"name": "duration", "value": 1000, "unit": "ms"}],
+      "context": {"synthetic": true},
+      "confidence": {"score": 0.5, "method": "Synthetic fixture"},
+      "provenance": {"source_id": "synthetic-source"},
+      "supporting_evidence_ids": [],
+      "limitations": ["Not empirical evidence."]
+    }
+  ]
+}

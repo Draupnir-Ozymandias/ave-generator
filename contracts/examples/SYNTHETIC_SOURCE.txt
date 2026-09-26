@@ -1,0 +1,5 @@
+AVE Generator synthetic four-region fixture version 1.
+
+This lawful, original fixture exists only to test deterministic offline rendering.
+It contains an explicit off interval, constant pulses, linear curves, and an
+independent bottom-right region. It is not derived from a proprietary stimulus.
