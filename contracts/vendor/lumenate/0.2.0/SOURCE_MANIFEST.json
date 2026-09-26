@@ -1,0 +1,53 @@
+{
+  "handoff_version": "0.1.0",
+  "created_at": "2026-09-26T18:32:40Z",
+  "source_repository": "lumenate_nova_forensics",
+  "source_commit": "7356332",
+  "receiver_repository": "ave_generator",
+  "intended_receiver_branch": "codex/four-region-screen-emulator",
+  "artifacts": [
+    {
+      "path": "contracts/lumenate-protocol-export-0.2.0.schema.json",
+      "sha256": "e6b6bf3fdf9d29a7a63d1f5f059584277d1296224aff227724e9620438ed265a",
+      "role": "immutable producer schema; vendor exactly for strict adapter validation"
+    },
+    {
+      "path": "contracts/ave-evidence-object-1.0.0.schema.json",
+      "sha256": "7edee601724e13ceb2308482a9f1135acbdb850360de149f1ac009374f26ce18",
+      "role": "immutable evidence-object schema referenced by protocol 0.2.0"
+    },
+    {
+      "path": "contracts/examples/aligned-export.json",
+      "sha256": "6b108a02999b02d7dbc782753b7d18215bc82b7b027b25b0844509f330b5866f",
+      "role": "sanitized synthetic adapter-validation fixture; not empirical evidence"
+    },
+    {
+      "path": "reports/lumenate_nova/exports/vitality-5min-empirical-0.2.0.json",
+      "sha256": "fef0f4d63e214eaa1fb1abdbbbe37cb7f255589787fbc7ec63e6dfcc93a59938",
+      "role": "current evidence-enriched empirical provenance fixture; incomplete as a rendering recipe"
+    },
+    {
+      "path": "reports/lumenate_nova/DEEP_EXPLORATION_CLOCK_MAPPING.md",
+      "sha256": "8d0b93906d723df2c16603f6ef5bf0acdb1b744b25758564b65d51e0aee87c28",
+      "role": "clock-mapping boundary and example of evidence-based timeline interpretation"
+    },
+    {
+      "path": "reports/lumenate_nova/PREREGISTERED_AUDIO_LIGHT_VALIDATION.md",
+      "sha256": "97e578cd7b336031dd87e0c5a574ce46d7afa904cb8b37cdad833450d8c0ec1a",
+      "role": "scientific-language and inference boundary for localized associations"
+    }
+  ],
+  "prohibited_transfer": [
+    "raw APK or DEX files",
+    "raw HCI or bugreport captures",
+    "device or account identifiers",
+    "signed media URLs or reusable tokens",
+    "copyrighted audio bytes"
+  ],
+  "notes": [
+    "Protocol 0.2.0 is evidence interchange, not a lossless render recipe.",
+    "Null values must remain unknown and shape_detail prose must not be parsed into commands.",
+    "The empirical Vitality artifact was enriched after the release-day fixture hash; pin this manifest's current hash when using the enriched artifact.",
+    "A mirrored four-region render is an emulator mapping, not evidence of physical Nova channel topology."
+  ]
+}

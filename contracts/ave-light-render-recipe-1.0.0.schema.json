@@ -1,0 +1,234 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/ave-generator/contracts/ave-light-render-recipe-1.0.0.schema.json",
+  "title": "AVE Four-Region Light Render Recipe",
+  "description": "Deterministic, device-neutral recipe for offline four-region light rendering.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "recipe_id",
+    "renderer_version",
+    "source",
+    "clock",
+    "duration_us",
+    "output",
+    "safety",
+    "regions",
+    "limitations"
+  ],
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "curve_nonnegative": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "value"],
+          "properties": {
+            "kind": {"const": "constant"},
+            "value": {"type": "number", "minimum": 0}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "start", "end"],
+          "properties": {
+            "kind": {"const": "linear"},
+            "start": {"type": "number", "minimum": 0},
+            "end": {"type": "number", "minimum": 0}
+          }
+        }
+      ]
+    },
+    "curve_unit": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "value"],
+          "properties": {
+            "kind": {"const": "constant"},
+            "value": {"type": "number", "minimum": 0, "maximum": 1}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "start", "end"],
+          "properties": {
+            "kind": {"const": "linear"},
+            "start": {"type": "number", "minimum": 0, "maximum": 1},
+            "end": {"type": "number", "minimum": 0, "maximum": 1}
+          }
+        }
+      ]
+    },
+    "color": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "value"],
+          "properties": {
+            "mode": {"const": "rgb"},
+            "value": {
+              "type": "array",
+              "prefixItems": [
+                {"type": "integer", "minimum": 0, "maximum": 255},
+                {"type": "integer", "minimum": 0, "maximum": 255},
+                {"type": "integer", "minimum": 0, "maximum": 255}
+              ],
+              "items": false
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "value"],
+          "properties": {
+            "mode": {"const": "grayscale"},
+            "value": {"type": "integer", "minimum": 0, "maximum": 255}
+          }
+        }
+      ]
+    },
+    "off_interval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["interval_id", "kind", "start_us", "end_us"],
+      "properties": {
+        "interval_id": {"type": "string", "minLength": 1},
+        "kind": {"const": "off"},
+        "start_us": {"type": "integer", "minimum": 0},
+        "end_us": {"type": "integer", "minimum": 1}
+      }
+    },
+    "pulse_interval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "interval_id",
+        "kind",
+        "start_us",
+        "end_us",
+        "frequency_hz",
+        "duty_cycle",
+        "intensity",
+        "color",
+        "phase_policy",
+        "phase_origin_cycles"
+      ],
+      "properties": {
+        "interval_id": {"type": "string", "minLength": 1},
+        "kind": {"const": "pulse"},
+        "start_us": {"type": "integer", "minimum": 0},
+        "end_us": {"type": "integer", "minimum": 1},
+        "frequency_hz": {"$ref": "#/$defs/curve_nonnegative"},
+        "duty_cycle": {"$ref": "#/$defs/curve_unit"},
+        "intensity": {"$ref": "#/$defs/curve_unit"},
+        "color": {"$ref": "#/$defs/color"},
+        "phase_policy": {"enum": ["continuous", "reset"]},
+        "phase_origin_cycles": {"type": "number", "minimum": 0, "exclusiveMaximum": 1},
+        "source_provenance": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["source_segment_id", "evidence_ids", "execution_layer"],
+          "properties": {
+            "source_segment_id": {"type": "string", "minLength": 1},
+            "evidence_ids": {
+              "type": "array",
+              "items": {"type": "string", "minLength": 1},
+              "uniqueItems": true
+            },
+            "execution_layer": {"type": "string", "minLength": 1}
+          }
+        }
+      }
+    },
+    "region": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "intervals"],
+      "properties": {
+        "name": {"enum": ["top_left", "top_right", "bottom_left", "bottom_right"]},
+        "intervals": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "oneOf": [
+              {"$ref": "#/$defs/off_interval"},
+              {"$ref": "#/$defs/pulse_interval"}
+            ]
+          }
+        }
+      }
+    }
+  },
+  "properties": {
+    "schema_version": {"const": "1.0.0"},
+    "recipe_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*$"},
+    "renderer_version": {"const": "0.1.0"},
+    "source": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["kind", "source_id", "sha256"],
+      "properties": {
+        "kind": {"enum": ["synthetic", "lumenate_protocol_export", "other"]},
+        "source_id": {"type": "string", "minLength": 1},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "clock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "unit", "origin_us"],
+      "properties": {
+        "kind": {"const": "monotonic_virtual"},
+        "unit": {"const": "us"},
+        "origin_us": {"const": 0}
+      }
+    },
+    "duration_us": {"type": "integer", "minimum": 1},
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["color_mode", "background_rgb"],
+      "properties": {
+        "color_mode": {"enum": ["rgb", "grayscale"]},
+        "background_rgb": {
+          "type": "array",
+          "prefixItems": [
+            {"type": "integer", "minimum": 0, "maximum": 255},
+            {"type": "integer", "minimum": 0, "maximum": 255},
+            {"type": "integer", "minimum": 0, "maximum": 255}
+          ],
+          "items": false
+        }
+      }
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["offline_only", "photosensitivity_warning", "calibrated_intensity"],
+      "properties": {
+        "offline_only": {"const": true},
+        "photosensitivity_warning": {"type": "string", "minLength": 1},
+        "calibrated_intensity": {"const": false}
+      }
+    },
+    "regions": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {"$ref": "#/$defs/region"}
+    },
+    "adapter_provenance": {"type": "object"},
+    "limitations": {"type": "array", "items": {"type": "string"}}
+  }
+}

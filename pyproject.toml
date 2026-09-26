@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ave-light-renderer"
+version = "0.1.0"
+description = "Deterministic offline four-region light renderer for AVE Generator"
+requires-python = ">=3.11"
+dependencies = [
+  "imageio==2.37.3",
+  "imageio-ffmpeg==0.6.0",
+  "jsonschema==4.25.1",
+  "numpy==2.4.4",
+  "pillow==12.2.0",
+]
+
+[project.optional-dependencies]
+test = ["pytest==9.0.2"]
+
+[project.scripts]
+ave-light-renderer = "ave_light_renderer.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.setuptools]
+packages = ["ave_light_renderer"]
+

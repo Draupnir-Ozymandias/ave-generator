@@ -1,67 +1,129 @@
 # AVE Generator
 
-AVE Generator is an early audiovisual-stimulation prototype. It currently creates a three-minute stereo audio track, renders a synchronized rotating yin-yang visualization with live telemetry, and combines both streams into an MP4 with FFmpeg.
+AVE Generator contains a deterministic, device-neutral four-region light renderer for offline engineering analysis. It validates a versioned recipe, resolves it onto a 60 or 120 Hz virtual frame clock, writes a pre-render manifest, and renders a four-quadrant MP4 from that resolved plan.
 
-The present code is a preserved experimental baseline, not a validated medical or therapeutic product. See [AVE_PLATFORM_STATUS_AND_ROADMAP.md](AVE_PLATFORM_STATUS_AND_ROADMAP.md) for the technical assessment, known signal-generation issue, scientific boundaries, and planned evolution into a recipe-driven music-generation platform verified by AVE Forensics.
+The repository also retains an earlier audiovisual prototype in `main.py`. That file is an isolated historical baseline: it renders at import time and has a known time-varying audio phase error. The four-region package never imports or executes it.
 
-## Current prototype
+## Four-region architecture
 
-- Python 3.11 environment definition.
-- 44.1 kHz, 16-bit stereo WAV generation.
-- Nominal binaural, isochronic, and harmonic phases.
-- Additive organ-like timbre centered on a 528 Hz artistic carrier choice.
-- 1024 × 1024 video at 60 fps.
-- Frequency/RPM/phase telemetry.
-- FFmpeg audio/video muxing.
+The data flow is deliberately one-way:
 
-The current time-varying audio oscillator math is known to be incorrect and must be replaced with sample-accurate phase accumulation before the output is used as an experimental stimulus. The roadmap identifies this as Milestone 0.
+```text
+AVE recipe 1.0.0 -> validation -> deterministic resolved frame plan
+                                      |
+                                      +-> pre-render manifest
+                                      +-> offline pixel renderer -> final manifest
+
+Lumenate export 0.2.0 -> strict adapter -> AVE recipe 1.0.0
+```
+
+AVE Generator owns the recipe, compiler, virtual frame plan, renderer, and render manifests. Lumenate forensic interpretations and evidence contracts remain owned by `lumenate_nova_forensics`. The repositories communicate only through pinned, sanitized JSON; no Lumenate code is imported or executed at runtime.
+
+Key paths:
+
+- `contracts/ave-light-render-recipe-1.0.0.schema.json` — generic four-region recipe contract.
+- `contracts/examples/synthetic-four-region-recipe.json` — lawful positive fixture with off periods, a constant pulse, ramps, and region divergence.
+- `contracts/vendor/lumenate/0.2.0/` — exact pinned protocol and evidence schemas plus their source manifest.
+- `contracts/examples/lumenate/` — aligned validation fixture and intentionally incomplete empirical provenance fixture.
+- `ave_light_renderer/` — validator, compiler, strict adapter, manifest builder, renderer, and CLI.
+- `tests/` — contract, timing, gating, independence, adapter, manifest, and renderer tests.
+
+## Recipe and timing model
+
+A recipe contains exactly four independently addressable regions: `top_left`, `top_right`, `bottom_left`, and `bottom_right`. Each region covers the entire monotonic virtual timeline with explicit contiguous `off` or `pulse` intervals. Pulse intervals use constant or linear frequency, duty-cycle, and intensity curves; RGB and grayscale colors are supported. Phase policy and phase origin are explicit.
+
+Compilation samples a rational virtual frame clock at 60 or 120 Hz. Frequency is integrated analytically by accumulation, including linear frequency ramps. The implementation does not evaluate a time-varying oscillator as `sin(2*pi*f(t)*t)`. Requested boundaries and their quantized frame boundaries are retained with timing-error summaries.
+
+The renderer consumes only the resolved plan. Before any pixel rendering, it writes a pre-render manifest containing recipe and plan hashes, renderer and Git state, refresh rate, transition quantization, timing errors, and warnings. The completed manifest adds hashes and byte sizes for the plan and output media. Generated media stays ignored by Git.
 
 ## Setup
 
-Create the Conda environment:
+Python 3.11 or newer and FFmpeg are required.
+
+```bash
+python -m venv .venv
+.venv/bin/python -m pip install -r requirements.txt
+```
+
+The Conda definition remains available as an alternative:
 
 ```bash
 conda env create -f environment.yml
 conda activate ave
-python -m pip install -r requirements.txt
 ```
 
-FFmpeg must also be installed and available on `PATH`.
+## Safe offline CLI
 
-## Run
+Run the complete first milestone with one command:
 
 ```bash
-python main.py
+.venv/bin/python -m ave_light_renderer demo \
+  --refresh 60 \
+  --output-dir output/four-region-demo
 ```
 
-The script writes generated files beneath `output/`:
+That command validates and compiles the synthetic recipe, prints the resolved-plan summary, writes the plan and pre-render manifest, renders a short MP4, finalizes the provenance-rich manifest, adapts the complete aligned Lumenate fixture using an explicit emulator phase choice, and records safe rejection of the incomplete empirical Vitality fixture without inference.
 
-- `audio.wav`
-- `video.mp4`
-- `final.mp4`
+Individual operations:
 
-## Output policy
+```bash
+# Validate an AVE recipe.
+.venv/bin/python -m ave_light_renderer validate \
+  contracts/examples/synthetic-four-region-recipe.json
 
-Generated audio and video are intentionally excluded from Git because they are large, reproducible build artifacts. The repository tracks the empty `output/` directory with `.gitkeep`, but not its contents.
+# Compile without pixels or flashing. Use 60 or 120 Hz.
+.venv/bin/python -m ave_light_renderer compile \
+  contracts/examples/synthetic-four-region-recipe.json --refresh 120
 
-Future versions should track compact protocol recipes and render manifests containing parameters, code version, random seed, checksums, and forensic verification results. Small synthetic test fixtures may be explicitly allow-listed when automated tests require them. Commercial or copyrighted source media must not be committed.
+# Render an offline MP4 and manifests.
+.venv/bin/python -m ave_light_renderer render \
+  contracts/examples/synthetic-four-region-recipe.json \
+  --refresh 60 --output-dir output/four-region-preview
 
-## Repository policy
+# Validate evidence and report whether it is renderable without inference.
+.venv/bin/python -m ave_light_renderer check-lumenate \
+  contracts/examples/lumenate/vitality-5min-empirical-0.2.0.json
 
-Track:
+# Adapt a complete 0.2.0 export; phase policy/origin are mandatory AVE choices.
+.venv/bin/python -m ave_light_renderer adapt-lumenate \
+  contracts/examples/lumenate/aligned-export.json \
+  --phase-policy reset --phase-origin 0 \
+  --output output/aligned-adapted-recipe.json
+```
 
-- Source code and tests.
-- Environment and dependency declarations.
-- Documentation and architecture decisions.
-- Protocol schemas, recipes, manifests, and small lawful fixtures added later.
+`check-lumenate` exits with status 2 when evidence is contract-valid but cannot drive rendering. It prints every missing machine-readable field.
 
-Do not track:
+## Tests
 
-- Generated audio/video renders.
-- Virtual environments or Python caches.
-- Local secrets and machine-specific configuration.
-- Commercial, proprietary, or otherwise non-redistributable media.
+```bash
+.venv/bin/python -m pytest -q
+```
 
-## Scientific posture
+The suite covers semantic validation, incomplete-input rejection, deterministic hashes and pixels, interval boundaries and off behavior, accumulated phase, duty gating, independent regions, 60/120 Hz quantization, exact vendored hashes, Lumenate provenance preservation, and render manifests.
 
-The software is intended to generate reproducible signals for engineering analysis and controlled experimentation. A programmed carrier, beat, pulse, or modulation rate does not establish physiological entrainment, a particular mental state, or clinical efficacy. Those questions require appropriately designed human research and independent measurements.
+## Adapter boundary
+
+The adapter accepts only Lumenate protocol version `0.2.0`. It verifies the exact vendored schema hashes before validation. It preserves the source-file hash, source export identity and timestamp, evidence IDs, per-segment execution layer, clock declarations, confidence, and limitations.
+
+The adapter rejects unsupported versions, non-covering timelines, and every segment missing intensity, RGB color, pulse frequency, duty cycle, or the pulse object itself. It never parses `shape_detail` prose and never replaces nulls with guessed values. Mirroring a single complete evidence timeline into four AVE regions and selecting phase behavior are explicit emulator mappings, not forensic findings about the device.
+
+## Safety posture and exact limitations
+
+This milestone is offline-only. It contains no torch control and no real-time flashing player. It does not access display hardware, react to wall-clock time, or claim exposure safety. A future real-time player is out of scope until the virtual-clock and offline tests pass; it would require explicit photosensitivity acknowledgement, black start/end states, immediate Escape and focus-loss blackout, a monotonic clock, and scheduled-versus-observed callback and dropped-frame logs.
+
+This software does **not** establish or claim:
+
+- neurological entrainment, a desired mental state, therapy, or clinical benefit;
+- photosensitivity safety or suitability for human exposure;
+- exact equivalence to a Lumenate Nova or any other physical device;
+- calibrated luminance or intensity;
+- packet-to-photon latency; or
+- subframe emitter phase.
+
+The current empirical Vitality export intentionally contains null rendering parameters. It is retained as provenance and a negative test, not treated as a complete stimulus recipe. The aligned export tests the adapter contract, while the synthetic AVE recipe is the positive rendering fixture.
+
+## Output and repository policy
+
+Track source, tests, environment declarations, documentation, schemas, recipes, manifests, and small lawful fixtures. Do not track generated audio/video, virtual environments, caches, secrets, machine-specific configuration, or proprietary source media. The `output/` directory is retained with `.gitkeep`; its generated contents are ignored.
+
+See [AVE_PLATFORM_STATUS_AND_ROADMAP.md](AVE_PLATFORM_STATUS_AND_ROADMAP.md) for the broader platform assessment and music-generation roadmap.

@@ -1,5 +1,7 @@
 # AVE Platform Status and Roadmap
 
+> Implementation update (2026-09-26): the isolated `ave_light_renderer` package now implements the first offline four-region screen-emulator milestone described in the repository README. It is recipe-driven, uses accumulated phase on a 60/120 Hz virtual clock, writes pre-render and final manifests, and enforces a strict pinned Lumenate `0.2.0` JSON adapter. This does not repair or validate the legacy `main.py` audio path, which remains isolated pending its Milestone 0 work.
+
 **Prepared:** 2026-08-03
 **Scope:** `ave_generator`, `ave_forensics`, and the conversation titled “binaural meditation and entrainment”
 
@@ -202,6 +204,33 @@ A protocol should describe:
 Every render should produce a JSON manifest containing the exact resolved timeline, hashes of every output, warnings, measured peaks/loudness, and the results of forensic verification.
 
 ## Roadmap
+
+### Completed cross-cutting foundation — visual protocol and offline rendering
+
+The four-region screen-emulator work deliberately proves parts of later milestones without changing the critical-path requirement to finish the audio baseline first.
+
+#### Milestone 2V — Deterministic visual protocol compiler (complete)
+
+- Versioned four-region AVE light-render recipe with a monotonic virtual clock.
+- Explicit off intervals; constant and linear frequency, duty-cycle, and intensity curves; RGB and grayscale output; and explicit phase policy/origin.
+- Deterministic accumulated-phase compilation at 60 and 120 Hz.
+- Requested-versus-quantized transition records and timing-error summaries.
+- Pre-render and completed manifests with recipe, plan, output, renderer, and Git provenance.
+- Strict, hash-pinned Lumenate `0.2.0` JSON adapter that rejects incomplete evidence without prose parsing or inferred values.
+
+**Exit criterion met:** the synthetic visual fixture can be changed through JSON, compiled without flashing, rendered offline, and reproduced byte-for-byte with a provenance-rich manifest.
+
+#### Milestone 6A — Offline four-region visual renderer (complete)
+
+- Four independently addressable screen regions driven only by the resolved plan.
+- Deterministic offline MP4 and image-sequence rendering primitives.
+- Explicit black/off behavior and a synthetic fixture with region-specific divergence.
+- Automated tests for boundaries, gating, phase accumulation, independence, quantization, deterministic pixels, and incomplete-input rejection.
+- No torch control and no real-time flashing path.
+
+**Exit criterion met for the offline subsystem only:** virtual modality timing is measurable and independently addressable. This does not complete Milestone 6 because there is no shared audio/visual master timeline, calibrated physical output, haptic renderer, or exposure-ready real-time player.
+
+The next critical-path work remains Milestone 0. After the audio baseline is corrected and verified, Milestone 2V should become the visual stem of the broader protocol compiler rather than a separate competing contract.
 
 ### Milestone 0 — Freeze and correct the baseline
 
