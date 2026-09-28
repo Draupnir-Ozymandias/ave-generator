@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0.0",
+  "protocol_id": "corrected-baseline-sweep-v1",
+  "duration_seconds": 180.0,
+  "sample_rate_hz": 44100,
+  "random_seed": 0,
+  "synthesis": {
+    "carrier_hz": 528.0,
+    "sweep": {"kind": "linear", "start_hz": 0.0, "end_hz": 360.0},
+    "transition_bands_hz": {
+      "binaural_to_isochronic": [36.0, 44.0],
+      "isochronic_to_harmonic": [76.0, 84.0]
+    },
+    "harmonics": [
+      {"multiple": 1, "amplitude": 1.0},
+      {"multiple": 2, "amplitude": 0.6},
+      {"multiple": 3, "amplitude": 0.4},
+      {"multiple": 4, "amplitude": 0.2}
+    ],
+    "binaural": {
+      "max_difference_hz": 40.0,
+      "harmonic_policy": "fundamental_only"
+    },
+    "isochronic_frequency_range_hz": [40.0, 80.0]
+  },
+  "output": {
+    "format": "wav",
+    "sample_encoding": "pcm_s16le",
+    "peak_linear": 0.9,
+    "fade_seconds": 0.05
+  },
+  "safety": {
+    "calibrated_spl": false,
+    "human_exposure_approved": false
+  },
+  "limitations": [
+    "Engineering calibration stimulus; not a mental-state protocol.",
+    "Output level is digital headroom, not calibrated sound pressure level.",
+    "No neurological, therapeutic, exposure-safety, or efficacy claim is made."
+  ]
+}

@@ -20,11 +20,11 @@ test = ["pytest==9.0.2"]
 
 [project.scripts]
 ave-light-renderer = "ave_light_renderer.cli:main"
+ave-audio-generator = "ave_audio_generator.cli:main"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
 
 [tool.setuptools]
-packages = ["ave_light_renderer"]
-
+packages = ["ave_light_renderer", "ave_audio_generator"]
