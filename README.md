@@ -4,6 +4,32 @@ AVE Generator contains deterministic, recipe-driven audio and four-region light 
 
 The original import-time audiovisual prototype and its time-varying phase defect remain preserved in Git history at commit `b31dba4`. The current `main.py` is a guarded compatibility entry point and does nothing when imported.
 
+## Demo portfolio priority
+
+AVE Generator now owns the recipe, rendering, media packaging, and manifest lane for the platform's five-demo engineering portfolio. The tracked recipes are:
+
+1. fixed-carrier binaural construction;
+2. smooth sinusoidal amplitude-modulation ramp;
+3. true hard-gated pulse contrast with an explicit duty cycle;
+4. four-region independent light schedules; and
+5. a staged binaural → smooth-AM → gated-pulse comparison.
+
+Smooth AM and gated pulses are different recipe stage kinds. A `smooth_am` stage has a continuous sine envelope and no duty cycle; a `gated_pulse` stage has hard edges and an explicit duty cycle. Neither is promoted into a neurological or therapeutic claim.
+
+Validate the complete portfolio and build the first shareable package:
+
+```bash
+.venv/bin/python -m ave_demo_generator validate all
+
+.venv/bin/python -m ave_demo_generator build \
+  contracts/examples/demos/binaural-difference-10hz-demo-v1.json \
+  --output-dir output/demos/binaural-difference-10hz-demo-v1
+```
+
+Every package contains the source recipe, resolved Generator declaration, WAV/stems, explanatory MP4, pre/final manifests, same-repository Generator checks, and a declaration-free verification request for AVE Forensics. The manifest reserves separate nullable fields for `forensics_observation` and `field_level_agreement`; Generator never fills those fields itself.
+
+All tracked recipes currently carry the conservative `exploratory` evidence-maturity label. Only an attached independent report and explicit field-level adjudication can support promotion to `partially_verified` or `verified`. See [docs/DEMO_PORTFOLIO_IMPLEMENTATION.md](docs/DEMO_PORTFOLIO_IMPLEMENTATION.md) for the package contract, status, and cross-repository handoff.
+
 ## Corrected audio baseline
 
 The `ave_audio_generator` package completes the implementation portion of audio Milestone 0:
@@ -133,7 +159,7 @@ Individual operations:
 .venv/bin/python -m pytest -q
 ```
 
-The suite covers both renderers: semantic validation, incomplete-input rejection, deterministic hashes and pixels, interval boundaries and off behavior, accumulated phase and chunk continuity, duty gating, stereo routing, headroom and fades, independent visual regions, 60/120 Hz quantization, Forensics agreement evaluation, exact vendored hashes, Lumenate provenance preservation, and render manifests.
+The suite covers both renderers and the demo packager: semantic validation, incomplete-input rejection, deterministic hashes and pixels, interval boundaries and off behavior, accumulated phase and chunk continuity, smooth-envelope versus hard-gate behavior, duty gating, stereo routing, headroom and fades, independent visual regions, 60/120 Hz quantization, record-boundary enforcement, Forensics agreement evaluation, exact vendored hashes, Lumenate provenance preservation, and render manifests.
 
 ## Adapter boundary
 

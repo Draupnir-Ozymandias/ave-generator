@@ -13,6 +13,7 @@ dependencies = [
   "jsonschema==4.25.1",
   "numpy==2.4.4",
   "pillow==12.2.0",
+  "scipy==1.17.1",
 ]
 
 [project.optional-dependencies]
@@ -21,10 +22,11 @@ test = ["pytest==9.0.2"]
 [project.scripts]
 ave-light-renderer = "ave_light_renderer.cli:main"
 ave-audio-generator = "ave_audio_generator.cli:main"
+ave-demo-generator = "ave_demo_generator.cli:main"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"
 
 [tool.setuptools]
-packages = ["ave_light_renderer", "ave_audio_generator"]
+packages = ["ave_light_renderer", "ave_audio_generator", "ave_demo_generator"]
