@@ -1,0 +1,270 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/ave-platform/contracts/ave-demo-declaration-0.1.0.schema.json",
+  "title": "AVE Demo Measurement Declaration",
+  "description": "Normalized, producer-authored claims and tolerances for independent field-level comparison.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "demo_id",
+    "demo_version",
+    "declaration_id",
+    "title",
+    "purpose",
+    "clock",
+    "claims",
+    "limitations"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.1.0"},
+    "demo_id": {
+      "type": "string",
+      "pattern": "^ave-demo-[0-9]{3}-[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "demo_version": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+    },
+    "declaration_id": {
+      "type": "string",
+      "pattern": "^ave-demo-[0-9]{3}-[a-z0-9]+(?:-[a-z0-9]+)*@(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)$"
+    },
+    "title": {"type": "string", "minLength": 1},
+    "purpose": {"type": "string", "minLength": 1},
+    "clock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["origin", "unit"],
+      "properties": {
+        "origin": {"const": "artifact_start"},
+        "unit": {"const": "s"}
+      }
+    },
+    "source_protocol": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["schema_version", "protocol_id", "sha256"],
+          "properties": {
+            "schema_version": {"type": "string", "minLength": 1},
+            "protocol_id": {"type": "string", "minLength": 1},
+            "sha256": {"$ref": "#/$defs/sha256"}
+          }
+        }
+      ]
+    },
+    "claims": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/claim"}
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1}
+    }
+  },
+  "$defs": {
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "time_range": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["start", "end"],
+          "properties": {
+            "start": {"type": "number", "minimum": 0},
+            "end": {"type": "number", "exclusiveMinimum": 0}
+          }
+        }
+      ]
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["modality", "channels", "regions", "time_range_seconds"],
+      "properties": {
+        "modality": {"enum": ["audio", "light", "video", "multimodal", "artifact"]},
+        "channels": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "regions": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "time_range_seconds": {"$ref": "#/$defs/time_range"}
+      }
+    },
+    "point": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["time_seconds", "value"],
+      "properties": {
+        "time_seconds": {"type": "number", "minimum": 0},
+        "value": {"type": "number"}
+      }
+    },
+    "target": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "value"],
+          "properties": {
+            "kind": {"const": "scalar"},
+            "value": {"type": "number"}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "minimum", "maximum"],
+          "properties": {
+            "kind": {"const": "interval"},
+            "minimum": {"type": "number"},
+            "maximum": {"type": "number"}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "start", "end"],
+          "properties": {
+            "kind": {"const": "linear_curve"},
+            "start": {"$ref": "#/$defs/point"},
+            "end": {"$ref": "#/$defs/point"}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "value"],
+          "properties": {
+            "kind": {"const": "category"},
+            "value": {"type": "string", "minLength": 1}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "value"],
+          "properties": {
+            "kind": {"const": "boolean"},
+            "value": {"type": "boolean"}
+          }
+        }
+      ]
+    },
+    "tolerance": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["comparison"],
+          "properties": {
+            "comparison": {"const": "exact"},
+            "minimum_coverage_fraction": {"type": "number", "minimum": 0, "maximum": 1},
+            "minimum_confidence": {"type": "number", "minimum": 0, "maximum": 1}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["comparison", "max_absolute_error"],
+          "properties": {
+            "comparison": {"const": "absolute"},
+            "max_absolute_error": {"type": "number", "minimum": 0},
+            "minimum_coverage_fraction": {"type": "number", "minimum": 0, "maximum": 1},
+            "minimum_confidence": {"type": "number", "minimum": 0, "maximum": 1}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["comparison", "max_relative_error_fraction", "relative_floor"],
+          "properties": {
+            "comparison": {"const": "relative"},
+            "max_relative_error_fraction": {"type": "number", "minimum": 0},
+            "relative_floor": {"type": "number", "exclusiveMinimum": 0},
+            "minimum_coverage_fraction": {"type": "number", "minimum": 0, "maximum": 1},
+            "minimum_confidence": {"type": "number", "minimum": 0, "maximum": 1}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["comparison", "max_absolute_error", "max_relative_error_fraction", "relative_floor"],
+          "properties": {
+            "comparison": {"const": "absolute_or_relative"},
+            "max_absolute_error": {"type": "number", "minimum": 0},
+            "max_relative_error_fraction": {"type": "number", "minimum": 0},
+            "relative_floor": {"type": "number", "exclusiveMinimum": 0},
+            "minimum_coverage_fraction": {"type": "number", "minimum": 0, "maximum": 1},
+            "minimum_confidence": {"type": "number", "minimum": 0, "maximum": 1}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["comparison", "boundary_margin"],
+          "properties": {
+            "comparison": {"const": "interval_containment"},
+            "boundary_margin": {"type": "number", "minimum": 0},
+            "minimum_coverage_fraction": {"type": "number", "minimum": 0, "maximum": 1},
+            "minimum_confidence": {"type": "number", "minimum": 0, "maximum": 1}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["comparison", "max_point_error", "max_rmse", "max_time_error_seconds", "minimum_coverage_fraction"],
+          "properties": {
+            "comparison": {"const": "curve_fit"},
+            "max_point_error": {"type": "number", "minimum": 0},
+            "max_rmse": {"type": "number", "minimum": 0},
+            "max_time_error_seconds": {"type": "number", "minimum": 0},
+            "minimum_coverage_fraction": {"type": "number", "minimum": 0, "maximum": 1},
+            "minimum_confidence": {"type": "number", "minimum": 0, "maximum": 1}
+          }
+        }
+      ]
+    },
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claim_id",
+        "required",
+        "evidence_type",
+        "metric",
+        "unit",
+        "scope",
+        "target",
+        "tolerance"
+      ],
+      "properties": {
+        "claim_id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:[._-][a-z0-9]+)*$"
+        },
+        "required": {"type": "boolean"},
+        "evidence_type": {"type": "string", "minLength": 1},
+        "metric": {"type": "string", "minLength": 1},
+        "unit": {
+          "enum": ["Hz", "Hz/s", "s", "fraction", "linear", "dBFS", "cycles", "frames", "count", "category", "boolean", "sha256"]
+        },
+        "scope": {"$ref": "#/$defs/scope"},
+        "target": {"$ref": "#/$defs/target"},
+        "tolerance": {"$ref": "#/$defs/tolerance"},
+        "notes": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

@@ -19,7 +19,7 @@ def _peak(signal: np.ndarray, rate: int) -> float:
 
 
 def test_binaural_channels_and_difference_are_rendered_deterministically():
-    resolved = _resolve("binaural-difference-10hz-demo-v1.json")
+    resolved = _resolve("ave-demo-001-binaural-construction.json")
     first, stems, _ = synthesize_demo(resolved)
     second, _, _ = synthesize_demo(resolved)
     assert first.tobytes() == second.tobytes()
@@ -52,8 +52,8 @@ def test_presentation_phase_integrates_linear_rate_instead_of_multiplying_rate_b
 
 
 def test_smooth_am_is_not_a_hard_gate_and_gated_pulse_has_off_samples():
-    smooth, _, _ = synthesize_demo(_resolve("smooth-am-ramp-4-to-20hz-demo-v1.json"))
-    gated, _, _ = synthesize_demo(_resolve("gated-pulse-12hz-duty25-demo-v1.json"))
+    smooth, _, _ = synthesize_demo(_resolve("ave-demo-002-smooth-am-ramp.json"))
+    gated, _, _ = synthesize_demo(_resolve("ave-demo-003-gated-pulse-contrast.json"))
     interior = slice(5000, -5000)
     smooth_zero_fraction = np.mean(smooth[interior, 0] == 0.0)
     gated_zero_fraction = np.mean(gated[interior, 0] == 0.0)
@@ -63,7 +63,7 @@ def test_smooth_am_is_not_a_hard_gate_and_gated_pulse_has_off_samples():
 
 
 def test_staged_stems_are_isolated_and_sum_to_mix():
-    resolved = _resolve("staged-binaural-smooth-am-gated-demo-v1.json")
+    resolved = _resolve("ave-demo-005-staged-av-comparison.json")
     audio, stems, _ = synthesize_demo(resolved)
     combined = np.sum(np.stack(list(stems.values())), axis=0)
     assert np.allclose(combined, audio, atol=1e-7)

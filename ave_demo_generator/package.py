@@ -18,6 +18,8 @@ from ave_light_renderer.validation import validate_recipe as validate_light_reci
 
 from . import __version__
 from .compiler import resolve_demo
+from .declaration import compile_declaration, declaration_mapping_report
+from .errors import DemoRecipeValidationError
 from .paths import PROJECT_ROOT
 from .presentation import render_presentation_video
 from .synthesis import synthesize_demo
@@ -50,9 +52,10 @@ From the AVE Generator repository root:
 ave-demo-generator build contracts/examples/demos/{recipe['demo_id']}.json --output-dir output/demos/{recipe['demo_id']}
 ```
 
-The recipe and resolved plan are authoritative Generator declarations. `generator-validation.json`
-contains same-repository build checks, not independent observations. Submit `verification-request.json`
-and `audio/stereo.wav` to AVE Forensics before changing the evidence-maturity label.
+`{recipe['demo_id']}-declaration.json` is the normalized Generator declaration.
+`generator-validation.json` contains same-repository build checks, not independent observations.
+Submit `verification-request.json` and the named artifact to AVE Forensics. Detector execution must
+persist observations before it loads declaration targets or tolerances.
 
 ## Safety and limitations
 
@@ -79,6 +82,12 @@ def build_demo_package(recipe_path: Path, output_dir: Path) -> dict[str, Any]:
     recipe_path = recipe_path.resolve()
     recipe = load_and_validate(recipe_path)
     resolved = resolve_demo(recipe, str(recipe_path))
+    declaration = compile_declaration(recipe, resolved)
+    mapping_report = declaration_mapping_report(recipe, declaration)
+    if output_dir.name != recipe["demo_id"]:
+        raise DemoRecipeValidationError(
+            f"canonical output directory must end with stable demo ID {recipe['demo_id']}"
+        )
     output_dir.mkdir(parents=True, exist_ok=True)
     audio_dir = output_dir / "audio"
     stems_dir = audio_dir / "stems"
@@ -87,15 +96,21 @@ def build_demo_package(recipe_path: Path, output_dir: Path) -> dict[str, Any]:
 
     source_state = git_state(PROJECT_ROOT)
     git_version = source_state["commit"] + ("+dirty" if source_state["dirty"] else "")
-    recipe_copy = output_dir / "recipe.json"
-    resolved_path = output_dir / "resolved-demo.json"
+    recipe_copy = output_dir / f"{recipe['demo_id']}-recipe.json"
+    resolved_path = output_dir / f"{recipe['demo_id']}-resolved-protocol.json"
+    declaration_path = output_dir / f"{recipe['demo_id']}-declaration.json"
+    mapping_path = output_dir / f"{recipe['demo_id']}-declaration-mapping.json"
     pre_path = output_dir / "render-manifest.pre.json"
     shutil.copyfile(recipe_path, recipe_copy)
     write_json(resolved_path, resolved)
+    write_json(declaration_path, declaration)
+    write_json(mapping_path, mapping_report)
     pre_manifest = {
-        "manifest_version": "1.0.0",
+        "manifest_version": "1.1.0",
         "status": "pre_render",
         "demo_id": recipe["demo_id"],
+        "demo_version": recipe["demo_version"],
+        "declaration_id": declaration["declaration_id"],
         "evidence_maturity": recipe["verification"]["evidence_maturity"],
         "recipe": {
             "canonical_sha256": resolved["recipe_canonical_sha256"],
@@ -106,6 +121,11 @@ def build_demo_package(recipe_path: Path, output_dir: Path) -> dict[str, Any]:
             "sample_count": resolved["sample_count"],
             "frame_count": resolved["frame_count"],
         },
+        "declaration": {
+            "schema_version": declaration["schema_version"],
+            "path": declaration_path.name,
+            "sha256": file_sha256(declaration_path),
+        },
         "generator": {
             "name": "ave-demo-generator",
             "version": __version__,
@@ -113,7 +133,8 @@ def build_demo_package(recipe_path: Path, output_dir: Path) -> dict[str, Any]:
             "git_dirty": source_state["dirty"],
         },
         "record_boundaries": {
-            "generator_declaration": "resolved-demo.json",
+            "generator_declaration": declaration_path.name,
+            "resolved_protocol": resolved_path.name,
             "generator_validation": "generator-validation.json (written after render)",
             "forensics_observation": None,
             "field_level_agreement": None,
@@ -162,18 +183,31 @@ def build_demo_package(recipe_path: Path, output_dir: Path) -> dict[str, Any]:
     validation_path = output_dir / "generator-validation.json"
     write_json(validation_path, generator_validation)
     verification_request = {
-        "request_version": "1.0.0",
+        "request_version": "1.1.0",
         "request_type": "independent_blind_audio_analysis",
         "demo_id": recipe["demo_id"],
-        "input": {
+        "demo_version": recipe["demo_version"],
+        "declaration_id": declaration["declaration_id"],
+        "detector_input": {
             "path": "audio/stereo.wav",
             "sha256": file_sha256(stereo_path),
-            "analyze_before_reading_generator_declarations": True,
+            "expected_values_present": False,
+            "expected_tolerances_present": False,
         },
-        "required_observation_fields": recipe["verification"]["required_fields"],
-        "agreement_tolerances": recipe["verification"]["tolerances"],
+        "requested_observation_metrics": sorted({claim["metric"] for claim in declaration["claims"]}),
+        "workflow": [
+            "Record and verify the detector_input artifact SHA-256.",
+            "Run detectors without loading the declaration's targets or tolerances.",
+            "Persist independent observations and evidence IDs.",
+            "Only then load comparison_after_observation and issue field-level results.",
+        ],
+        "comparison_after_observation": {
+            "declaration_path": declaration_path.name,
+            "declaration_sha256": file_sha256(declaration_path),
+            "do_not_load_before_evidence_is_persisted": True,
+        },
         "requested_result_values": ["agree", "disagree", "unsupported"],
-        "generator_declared_values_included": False,
+        "generator_declared_values_in_detector_input": False,
         "notes": [
             "AVE Forensics owns observations and field-level agreement results.",
             "Unsupported fields must remain unsupported; do not infer absent values.",
@@ -185,7 +219,7 @@ def build_demo_package(recipe_path: Path, output_dir: Path) -> dict[str, Any]:
     readme_path.write_text(_package_readme(recipe, resolved), encoding="utf-8")
 
     material_outputs = [
-        recipe_copy, resolved_path, stereo_path, left_path, right_path,
+        recipe_copy, resolved_path, declaration_path, mapping_path, stereo_path, left_path, right_path,
         *stem_paths, silent_video, presentation_path, *light_outputs,
         validation_path, request_path, readme_path,
     ]
@@ -195,9 +229,22 @@ def build_demo_package(recipe_path: Path, output_dir: Path) -> dict[str, Any]:
         "status": "complete" if generator_validation["passed"] else "generator_validation_failed",
         "pre_render_manifest": {"path": pre_path.name, "sha256": file_sha256(pre_path)},
         "generator_declaration": {
+            "path": declaration_path.name,
+            "sha256": file_sha256(declaration_path),
+            "record_sha256": canonical_sha256(declaration),
+            "schema_version": declaration["schema_version"],
+            "declaration_id": declaration["declaration_id"],
+        },
+        "resolved_protocol": {
             "path": resolved_path.name,
             "sha256": file_sha256(resolved_path),
-            "record_sha256": canonical_sha256(resolved["declarations"]),
+            "resolved_plan_sha256": resolved["resolved_plan_sha256"],
+        },
+        "declaration_mapping": {
+            "path": mapping_path.name,
+            "sha256": file_sha256(mapping_path),
+            "unmapped_field_count": len(mapping_report["unmapped_generator_fields"]),
+            "interpretation_invented": False,
         },
         "generator_validation": {
             "path": validation_path.name,
@@ -216,6 +263,9 @@ def build_demo_package(recipe_path: Path, output_dir: Path) -> dict[str, Any]:
 
     return {
         "demo_id": recipe["demo_id"],
+        "demo_version": recipe["demo_version"],
+        "declaration_id": declaration["declaration_id"],
+        "declaration": str(declaration_path),
         "evidence_maturity": recipe["verification"]["evidence_maturity"],
         "output_dir": str(output_dir),
         "presentation": str(presentation_path),

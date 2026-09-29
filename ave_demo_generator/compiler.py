@@ -34,6 +34,8 @@ def resolve_demo(recipe: dict, recipe_file: str | None = None) -> dict:
         "resolved_demo_version": "1.0.0",
         "generator_version": __version__,
         "demo_id": recipe["demo_id"],
+        "demo_version": recipe["demo_version"],
+        "declaration_id": f"{recipe['demo_id']}@{recipe['demo_version']}",
         "recipe_canonical_sha256": canonical_sha256(recipe),
         "recipe_file_sha256": file_sha256(recipe_file) if recipe_file else None,
         "duration_seconds": recipe["duration_seconds"],

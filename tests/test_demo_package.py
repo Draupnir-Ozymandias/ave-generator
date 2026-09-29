@@ -15,19 +15,24 @@ def test_package_separates_declarations_checks_and_external_observations(tmp_pat
 
     monkeypatch.setattr(package_module, "render_presentation_video", fake_render)
     monkeypatch.setattr(package_module, "mux_av", fake_mux)
-    target = tmp_path / "package"
+    target = tmp_path / "ave-demo-001-binaural-construction"
     result = package_module.build_demo_package(
-        DEMO_RECIPE_DIR / "binaural-difference-10hz-demo-v1.json", target
+        DEMO_RECIPE_DIR / "ave-demo-001-binaural-construction.json", target
     )
     manifest = load_json(target / "render-manifest.json")
     request = load_json(target / "verification-request.json")
 
     assert result["generator_validation_passed"] is True
-    assert manifest["generator_declaration"]["path"] == "resolved-demo.json"
+    assert manifest["generator_declaration"]["path"] == "ave-demo-001-binaural-construction-declaration.json"
+    assert manifest["generator_declaration"]["declaration_id"] == "ave-demo-001-binaural-construction@1.0.0"
+    assert manifest["resolved_protocol"]["path"] == "ave-demo-001-binaural-construction-resolved-protocol.json"
     assert manifest["generator_validation"]["passed"] is True
     assert manifest["forensics_observation"] is None
     assert manifest["field_level_agreement"] is None
     assert manifest["evidence_maturity"] == "exploratory"
-    assert request["input"]["sha256"] == file_sha256(target / "audio" / "stereo.wav")
-    assert request["generator_declared_values_included"] is False
-    assert "left_carrier_hz" in request["required_observation_fields"]
+    assert request["detector_input"]["sha256"] == file_sha256(target / "audio" / "stereo.wav")
+    assert request["generator_declared_values_in_detector_input"] is False
+    assert request["detector_input"]["expected_values_present"] is False
+    assert request["detector_input"]["expected_tolerances_present"] is False
+    assert "carrier_frequency_hz" in request["requested_observation_metrics"]
+    assert request["comparison_after_observation"]["do_not_load_before_evidence_is_persisted"] is True

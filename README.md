@@ -8,11 +8,11 @@ The original import-time audiovisual prototype and its time-varying phase defect
 
 AVE Generator now owns the recipe, rendering, media packaging, and manifest lane for the platform's five-demo engineering portfolio. The tracked recipes are:
 
-1. fixed-carrier binaural construction;
-2. smooth sinusoidal amplitude-modulation ramp;
-3. true hard-gated pulse contrast with an explicit duty cycle;
-4. four-region independent light schedules; and
-5. a staged binaural → smooth-AM → gated-pulse comparison.
+1. `ave-demo-001-binaural-construction` — fixed-carrier binaural construction;
+2. `ave-demo-002-smooth-am-ramp` — smooth amplitude modulation with a linear rate ramp;
+3. `ave-demo-003-gated-pulse-contrast` — true hard-gated pulse contrast with an explicit duty cycle;
+4. `ave-demo-004-four-region-light` — four-region independent light schedules; and
+5. `ave-demo-005-staged-av-comparison` — a staged binaural → smooth-AM → gated-pulse comparison.
 
 Smooth AM and gated pulses are different recipe stage kinds. A `smooth_am` stage has a continuous sine envelope and no duty cycle; a `gated_pulse` stage has hard edges and an explicit duty cycle. Neither is promoted into a neurological or therapeutic claim.
 
@@ -22,11 +22,12 @@ Validate the complete portfolio and build the first shareable package:
 .venv/bin/python -m ave_demo_generator validate all
 
 .venv/bin/python -m ave_demo_generator build \
-  contracts/examples/demos/binaural-difference-10hz-demo-v1.json \
-  --output-dir output/demos/binaural-difference-10hz-demo-v1
+  contracts/examples/demos/ave-demo-001-binaural-construction.json
 ```
 
-Every package contains the source recipe, resolved Generator declaration, WAV/stems, explanatory MP4, pre/final manifests, same-repository Generator checks, and a declaration-free verification request for AVE Forensics. The manifest reserves separate nullable fields for `forensics_observation` and `field_level_agreement`; Generator never fills those fields itself.
+Every package contains the source recipe, resolved protocol, schema-valid Platform declaration, declaration-mapping report, WAV/stems, explanatory MP4, pre/final manifests, same-repository Generator checks, and a blind detector request for AVE Forensics. Stable IDs are permanent; recipe revisions use `demo_version`, and declarations use `<demo_id>@<demo_version>`. The manifest reserves separate nullable fields for `forensics_observation` and `field_level_agreement`; Generator never fills those fields itself.
+
+The Platform declaration `0.1.0` schema is vendored with its exact SHA-256. Detector requests contain the artifact hash and requested metrics but no expected values or tolerances. The declaration is loaded only in the post-observation comparison phase.
 
 All tracked recipes currently carry the conservative `exploratory` evidence-maturity label. Only an attached independent report and explicit field-level adjudication can support promotion to `partially_verified` or `verified`. See [docs/DEMO_PORTFOLIO_IMPLEMENTATION.md](docs/DEMO_PORTFOLIO_IMPLEMENTATION.md) for the package contract, status, and cross-repository handoff.
 
@@ -50,7 +51,7 @@ Run the complete 10- and 180-second audio acceptance workflow:
   --forensics-repo ../ave_forensics
 ```
 
-The 180-second Forensics pass verifies the exact WAV identity, persistent 528/1056/1584/2112 Hz carrier structure, and the early binaural-difference ramp through its time-resolved timeline. The current Forensics configuration does not independently reconstruct the later continuous isochronic and harmonic modulation ramps; the Generator’s black-box signal probes cover those programmed values, and this division of coverage is explicit in the manifest.
+The 180-second Forensics pass verifies the exact WAV identity, persistent 528/1056/1584/2112 Hz carrier structure, and the early binaural-difference ramp through its time-resolved timeline. The current Forensics configuration does not independently reconstruct the later continuous smooth amplitude-modulation and harmonic-modulation ramps; the Generator’s black-box signal probes cover those programmed values, and this division of coverage is explicit in the manifest.
 
 Render and mux the guarded audiovisual baseline explicitly:
 
@@ -78,6 +79,10 @@ AVE Generator owns the recipe, compiler, virtual frame plan, renderer, and rende
 
 Key paths:
 
+- `contracts/ave-demo-recipe-1.1.0.schema.json` — Generator portfolio recipe contract with stable demo identity and separate semantic version.
+- `contracts/vendor/ave-platform/0.1.0/` — exact pinned Platform declaration schema and source manifest.
+- `contracts/examples/demos/` — the five stable-ID portfolio recipes.
+- `ave_demo_generator/` — declaration compiler/validator, deterministic demo synthesis, presentation renderer, package builder, and CLI.
 - `contracts/ave-light-render-recipe-1.0.0.schema.json` — generic four-region recipe contract.
 - `contracts/examples/synthetic-four-region-recipe.json` — lawful positive fixture with off periods, a constant pulse, ramps, and region divergence.
 - `contracts/vendor/lumenate/0.2.0/` — exact pinned protocol and evidence schemas plus their source manifest.

@@ -9,12 +9,24 @@ from .errors import DemoRecipeValidationError
 from .paths import DEMO_SCHEMA_PATH, PROJECT_ROOT
 
 
+STABLE_DEMO_IDS = {
+    "ave-demo-001-binaural-construction",
+    "ave-demo-002-smooth-am-ramp",
+    "ave-demo-003-gated-pulse-contrast",
+    "ave-demo-004-four-region-light",
+    "ave-demo-005-staged-av-comparison",
+}
+
+
 def validate_demo_recipe(recipe: dict) -> dict:
     schema = load_json(DEMO_SCHEMA_PATH)
     try:
         _jsonschema_validate(recipe, schema, DEMO_SCHEMA_PATH)
     except Exception as exc:
         raise DemoRecipeValidationError(str(exc)) from exc
+
+    if recipe["demo_id"] not in STABLE_DEMO_IDS:
+        raise DemoRecipeValidationError(f"unregistered stable demo_id: {recipe['demo_id']}")
 
     sample_count = recipe["duration_seconds"] * recipe["sample_rate_hz"]
     if abs(sample_count - round(sample_count)) > 1e-9:

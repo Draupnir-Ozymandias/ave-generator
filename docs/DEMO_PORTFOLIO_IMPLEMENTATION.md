@@ -14,17 +14,19 @@ The repositories exchange versioned, sanitized JSON and hashed media. Generator 
 
 | Order | Demo ID | Engineering distinction | Current label |
 |---:|---|---|---|
-| 1 | `binaural-difference-10hz-demo-v1` | Separate 440/450 Hz stereo carriers and declared 10 Hz difference | `exploratory` |
-| 2 | `smooth-am-ramp-4-to-20hz-demo-v1` | 440 Hz carrier with continuous sine-envelope AM ramp | `exploratory` |
-| 3 | `gated-pulse-12hz-duty25-demo-v1` | 440 Hz carrier with a hard 12 Hz, 25% duty gate | `exploratory` |
-| 4 | `four-region-independent-schedules-demo-v1` | Four independently scheduled synthetic light regions | `exploratory` |
-| 5 | `staged-binaural-smooth-am-gated-demo-v1` | Time-separated contrast of the three audio constructions | `exploratory` |
+| 1 | `ave-demo-001-binaural-construction` | Separate 440/450 Hz stereo carriers and declared 10 Hz difference | `exploratory` |
+| 2 | `ave-demo-002-smooth-am-ramp` | 440 Hz carrier with continuous smooth amplitude modulation from 4–20 Hz | `exploratory` |
+| 3 | `ave-demo-003-gated-pulse-contrast` | 440 Hz carrier with a hard 12 Hz, 25% duty gate | `exploratory` |
+| 4 | `ave-demo-004-four-region-light` | Four independently scheduled synthetic light regions | `exploratory` |
+| 5 | `ave-demo-005-staged-av-comparison` | Time-separated contrast of the three audio constructions | `exploratory` |
 
 The labels are intentionally conservative. A passing Generator check is not independent evidence and cannot promote a label.
 
 ## Contract and package layout
 
-`contracts/ave-demo-recipe-1.0.0.schema.json` requires:
+Stable demo IDs are permanent. Each recipe carries an independent semantic `demo_version`, and its normalized declaration identity is `<demo_id>@<demo_version>`. Generator vendors the exact AVE Platform declaration `0.1.0` schema at SHA-256 `aca39c90191762cde5048dfefc6f732d9e0c43e2da668194f2cc6cb04175ab45`.
+
+`contracts/ave-demo-recipe-1.1.0.schema.json` requires:
 
 - a monotonic, contiguous stage timeline;
 - one of `silence`, `binaural`, `smooth_am`, or `gated_pulse` for each audio stage;
@@ -39,8 +41,10 @@ The labels are intentionally conservative. A passing Generator check is not inde
 A built package contains:
 
 ```text
-recipe.json                         source Generator recipe
-resolved-demo.json                 resolved Generator declaration
+<demo-id>-recipe.json              source Generator recipe
+<demo-id>-resolved-protocol.json   resolved Generator protocol
+<demo-id>-declaration.json         normalized Platform 0.1.0 declaration
+<demo-id>-declaration-mapping.json explicit fields not cleanly representable
 render-manifest.pre.json           provenance written before media rendering
 audio/stereo.wav                   analysis and distribution master
 audio/left.wav, audio/right.wav    channel-isolated files
@@ -57,7 +61,8 @@ For a four-region package, the resolved light plan and raw four-region preview a
 
 The final manifest keeps these records separate:
 
-- `generator_declaration`: what Generator intended to render;
+- `generator_declaration`: normalized measurable targets and tolerances;
+- `resolved_protocol`: the complete Generator rendering instruction set;
 - `generator_validation`: same-repository measurements and integrity checks;
 - `forensics_observation`: initially null, later supplied by AVE Forensics; and
 - `field_level_agreement`: initially null, later supplied by AVE Forensics or a contract-defined adjudicator.
@@ -68,8 +73,7 @@ The final manifest keeps these records separate:
 .venv/bin/python -m ave_demo_generator validate all
 
 .venv/bin/python -m ave_demo_generator build \
-  contracts/examples/demos/binaural-difference-10hz-demo-v1.json \
-  --output-dir output/demos/binaural-difference-10hz-demo-v1
+  contracts/examples/demos/ave-demo-001-binaural-construction.json
 
 .venv/bin/python -m pytest -q
 ```
@@ -78,7 +82,7 @@ Generated media remains under ignored `output/`; source recipes, schemas, tests,
 
 ## Independent verification handoff
 
-For Demo 1, provide only `audio/stereo.wav` and `verification-request.json` to AVE Forensics for the first analysis pass. Forensics should record the exact input hash and observe duration, left/right carriers, interchannel difference, channel routing, and sample peak without reading Generator-declared values. It should then compare those observations with `resolved-demo.json` using the supplied tolerances and return a versioned observation record plus field-level agreement report.
+For Demo 1, the detector phase receives only `audio/stereo.wav` and the `detector_input` portion of `verification-request.json`. Forensics records the exact input hash and persists duration, carrier, interchannel-difference, routing, and peak observations without loading expected values or tolerances. Only afterward does the comparison phase load `ave-demo-001-binaural-construction-declaration.json` by hash and return a versioned observation record plus field-level agreement report.
 
 Generator can adopt that report as an immutable attachment in a later package revision. Until then, Demo 1 remains `exploratory`, even though Generator's own black-box checks pass.
 
@@ -96,6 +100,10 @@ This confirms both the signal's basic analyzability and the remaining contract w
 - Demo 4 needs a visual-plan analyzer or field-level comparison contract; it makes no calibrated-luminance or physical-device-equivalence claim.
 - Demo 5 should not be promoted until the three construction kinds can be classified independently by stage.
 - Lumenate empirical exports remain optional provenance inputs. Null or incomplete device parameters are never filled by inference.
+
+## Declaration mapping limitations
+
+Declaration `0.1.0` cleanly represents scalar, interval, category, boolean, and single linear-curve measurement claims. It does not represent package policy/provenance fields, RGB/grayscale tuples, or a compound piecewise four-region schedule as one target. Those values remain in the hashed recipe and resolved protocol and are listed in each package's declaration-mapping report with `interpretation_invented: false`.
 
 ## Safety and claim boundary
 

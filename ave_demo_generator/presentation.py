@@ -167,7 +167,8 @@ def render_presentation_video(path: Path, recipe: dict[str, Any], resolved: dict
 
             if card == "title":
                 y = _write_wrapped(draw, recipe["title"], (52, 145), width - 104, _font(44, True), TEXT, 12)
-                _write_wrapped(draw, recipe["purpose"], (54, y + 22), width - 108, _font(22), MUTED)
+                y = _write_wrapped(draw, recipe["purpose"], (54, y + 22), width - 108, _font(22), MUTED)
+                draw.text((54, min(y + 22, height - 80)), f"{recipe['demo_id']}@{recipe['demo_version']}", font=_font(17), fill=ACCENT)
             elif card == "construction":
                 draw.text((52, 112), "DECLARED CONSTRUCTION", font=_font(34, True), fill=TEXT)
                 lines = []
@@ -193,7 +194,7 @@ def render_presentation_video(path: Path, recipe: dict[str, Any], resolved: dict
                 _write_wrapped(draw, "Engineering demonstration only. Use headphones only if appropriate for the declared stereo construction. Stop if uncomfortable. No calibrated sound level, neurological entrainment, therapeutic outcome, or safety claim.", (55, 178), width - 110, _font(23), TEXT, 12)
             else:
                 draw.text((52, 105), "REPRODUCIBLE PROVENANCE", font=_font(34, True), fill=TEXT)
-                details = f"Recipe SHA-256\n{resolved['recipe_canonical_sha256']}\n\nResolved plan SHA-256\n{resolved['resolved_plan_sha256']}\n\nGenerator Git\n{git_version}"
+                details = f"Declaration\n{recipe['demo_id']}@{recipe['demo_version']}\n\nRecipe SHA-256\n{resolved['recipe_canonical_sha256']}\n\nResolved plan SHA-256\n{resolved['resolved_plan_sha256']}\n\nGenerator Git\n{git_version}"
                 _write_wrapped(draw, details, (55, 165), width - 110, _font(19), MUTED, 8)
 
             progress = max(2, int((frame_index + 1) / resolved["frame_count"] * (width - 84)))

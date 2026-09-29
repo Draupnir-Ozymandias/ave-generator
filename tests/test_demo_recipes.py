@@ -17,6 +17,14 @@ def test_portfolio_defines_exactly_five_valid_recipes():
     assert len(recipes) == 5
     assert len({recipe["demo_id"] for recipe in recipes}) == 5
     assert {recipe["verification"]["evidence_maturity"] for recipe in recipes} == {"exploratory"}
+    assert {recipe["demo_version"] for recipe in recipes} == {"1.0.0"}
+    assert {recipe["demo_id"] for recipe in recipes} == {
+        "ave-demo-001-binaural-construction",
+        "ave-demo-002-smooth-am-ramp",
+        "ave-demo-003-gated-pulse-contrast",
+        "ave-demo-004-four-region-light",
+        "ave-demo-005-staged-av-comparison",
+    }
 
 
 def test_smooth_am_and_gated_pulse_are_structurally_distinct():
@@ -34,14 +42,14 @@ def test_incomplete_or_semantically_unsafe_recipe_is_rejected():
     with pytest.raises(DemoRecipeValidationError):
         validate_demo_recipe(recipe)
 
-    smooth = next(recipe for recipe in _recipes() if recipe["demo_id"].startswith("smooth-am"))
+    smooth = next(recipe for recipe in _recipes() if recipe["demo_id"] == "ave-demo-002-smooth-am-ramp")
     smooth["title"] = "Isochronic ramp"
     with pytest.raises(DemoRecipeValidationError, match="must not be titled"):
         validate_demo_recipe(smooth)
 
 
 def test_audio_stages_must_be_contiguous():
-    staged = next(recipe for recipe in _recipes() if recipe["demo_id"].startswith("staged-"))
+    staged = next(recipe for recipe in _recipes() if recipe["demo_id"] == "ave-demo-005-staged-av-comparison")
     staged["audio"]["stages"][1]["start_seconds"] += 0.1
     with pytest.raises(DemoRecipeValidationError, match="contiguous"):
         validate_demo_recipe(staged)
