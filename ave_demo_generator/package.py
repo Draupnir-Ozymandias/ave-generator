@@ -169,6 +169,7 @@ def build_demo_package(recipe_path: Path, output_dir: Path) -> dict[str, Any]:
     presentation_path = mux_av(silent_video, stereo_path, output_dir / "presentation.mp4")
 
     light_outputs: list[Path] = []
+    light_video_path: Path | None = None
     if recipe["visual"]["kind"] == "four_region":
         light_recipe_path = PROJECT_ROOT / recipe["visual"]["light_recipe_path"]
         light_recipe = validate_light_recipe(load_json(light_recipe_path))
@@ -182,17 +183,32 @@ def build_demo_package(recipe_path: Path, output_dir: Path) -> dict[str, Any]:
     generator_validation = verify_demo_audio(stereo_path, resolved)
     validation_path = output_dir / "generator-validation.json"
     write_json(validation_path, generator_validation)
+    if recipe["visual"]["kind"] == "four_region":
+        if light_video_path is None:
+            raise RuntimeError("four-region detector artifact was not rendered")
+        detector_path = light_video_path
+        detector_relative_path = detector_path.relative_to(output_dir).as_posix()
+        detector_media_type = "video/mp4"
+        request_type = "independent_blind_visual_analysis"
+    else:
+        detector_path = stereo_path
+        detector_relative_path = detector_path.relative_to(output_dir).as_posix()
+        detector_media_type = "audio/wav"
+        request_type = "independent_blind_audio_analysis"
+
     verification_request = {
         "request_version": "1.1.0",
-        "request_type": "independent_blind_audio_analysis",
+        "request_type": request_type,
         "demo_id": recipe["demo_id"],
         "demo_version": recipe["demo_version"],
         "declaration_id": declaration["declaration_id"],
         "detector_input": {
-            "path": "audio/stereo.wav",
-            "sha256": file_sha256(stereo_path),
+            "path": detector_relative_path,
+            "media_type": detector_media_type,
+            "sha256": file_sha256(detector_path),
             "expected_values_present": False,
             "expected_tolerances_present": False,
+            "target_schedules_present": False,
         },
         "requested_observation_metrics": sorted({claim["metric"] for claim in declaration["claims"]}),
         "workflow": [
