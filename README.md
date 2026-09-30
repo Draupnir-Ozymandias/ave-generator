@@ -193,4 +193,6 @@ The current empirical Vitality export intentionally contains null rendering para
 
 Track source, tests, environment declarations, documentation, schemas, recipes, manifests, and small lawful fixtures. Do not track generated audio/video, virtual environments, caches, secrets, machine-specific configuration, or proprietary source media. The `output/` directory is retained with `.gitkeep`; its generated contents are ignored.
 
+For routine branch synchronization, `./sync_repo.sh "Commit message"` fetches and rebases the current branch, runs the Generator tests and staged whitespace checks, commits tracked source changes, and pushes to `origin`. Set `AVE_REMOTE` only when intentionally targeting another configured remote. `AVE_SKIP_TESTS=1` is an explicit escape hatch, not the default.
+
 See [AVE_PLATFORM_STATUS_AND_ROADMAP.md](AVE_PLATFORM_STATUS_AND_ROADMAP.md) for the broader platform assessment and music-generation roadmap.
