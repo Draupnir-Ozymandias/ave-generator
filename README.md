@@ -4,6 +4,35 @@ AVE Generator contains deterministic, recipe-driven audio and four-region light 
 
 The original import-time audiovisual prototype and its time-varying phase defect remain preserved in Git history at commit `b31dba4`. The current `main.py` is a guarded compatibility entry point and does nothing when imported.
 
+## Demo portfolio priority
+
+AVE Generator now owns the recipe, rendering, media packaging, and manifest lane for the platform's five-demo engineering portfolio. The tracked recipes are:
+
+1. `ave-demo-001-binaural-construction` — fixed-carrier binaural construction;
+2. `ave-demo-002-smooth-am-ramp` — smooth amplitude modulation with a linear rate ramp;
+3. `ave-demo-003-gated-pulse-contrast` — true hard-gated pulse contrast with an explicit duty cycle;
+4. `ave-demo-004-four-region-light` — four-region independent light schedules; and
+5. `ave-demo-005-staged-av-comparison` — a staged binaural → smooth-AM → gated-pulse comparison.
+
+Smooth AM and gated pulses are different recipe stage kinds. A `smooth_am` stage has a continuous sine envelope and no duty cycle; a `gated_pulse` stage has hard edges and an explicit duty cycle. Neither is promoted into a neurological or therapeutic claim.
+
+Validate the complete portfolio and build the first shareable package:
+
+```bash
+.venv/bin/python -m ave_demo_generator validate all
+
+.venv/bin/python -m ave_demo_generator build \
+  contracts/examples/demos/ave-demo-001-binaural-construction.json
+```
+
+Every package contains the source recipe, resolved protocol, schema-valid Platform declaration, declaration-mapping report, WAV/stems, explanatory MP4, pre/final manifests, same-repository Generator checks, and a blind detector request for AVE Forensics. Stable IDs are permanent; recipe revisions use `demo_version`, and declarations use `<demo_id>@<demo_version>`. The manifest reserves separate nullable fields for `forensics_observation` and `field_level_agreement`; Generator never fills those fields itself.
+
+The Platform declaration `0.1.0` schema is vendored with its exact SHA-256. Detector requests contain the artifact hash and requested metrics but no expected values or tolerances. The declaration is loaded only in the post-observation comparison phase.
+
+Demo 005 additionally publishes `multimodal-detector.mp4`: the rendered stereo master muxed with an unlabeled, audio-reactive video generated on the same virtual clock. Its pixels encode contemporaneous left/right RMS only. It contains no text, stage boundaries, construction labels, targets, or tolerances and exists solely for blind audio-to-video clock analysis; it is not an exposure-ready presentation.
+
+All tracked recipes currently carry the conservative `exploratory` evidence-maturity label. Only an attached independent report and explicit field-level adjudication can support promotion to `partially_verified` or `verified`. See [docs/DEMO_PORTFOLIO_IMPLEMENTATION.md](docs/DEMO_PORTFOLIO_IMPLEMENTATION.md) for the package contract, status, and cross-repository handoff.
+
 ## Corrected audio baseline
 
 The `ave_audio_generator` package completes the implementation portion of audio Milestone 0:
@@ -24,7 +53,7 @@ Run the complete 10- and 180-second audio acceptance workflow:
   --forensics-repo ../ave_forensics
 ```
 
-The 180-second Forensics pass verifies the exact WAV identity, persistent 528/1056/1584/2112 Hz carrier structure, and the early binaural-difference ramp through its time-resolved timeline. The current Forensics configuration does not independently reconstruct the later continuous isochronic and harmonic modulation ramps; the Generator’s black-box signal probes cover those programmed values, and this division of coverage is explicit in the manifest.
+The 180-second Forensics pass verifies the exact WAV identity, persistent 528/1056/1584/2112 Hz carrier structure, and the early binaural-difference ramp through its time-resolved timeline. The current Forensics configuration does not independently reconstruct the later continuous smooth amplitude-modulation and harmonic-modulation ramps; the Generator’s black-box signal probes cover those programmed values, and this division of coverage is explicit in the manifest.
 
 Render and mux the guarded audiovisual baseline explicitly:
 
@@ -52,6 +81,10 @@ AVE Generator owns the recipe, compiler, virtual frame plan, renderer, and rende
 
 Key paths:
 
+- `contracts/ave-demo-recipe-1.1.0.schema.json` — Generator portfolio recipe contract with stable demo identity and separate semantic version.
+- `contracts/vendor/ave-platform/0.1.0/` — exact pinned Platform declaration schema and source manifest.
+- `contracts/examples/demos/` — the five stable-ID portfolio recipes.
+- `ave_demo_generator/` — declaration compiler/validator, deterministic demo synthesis, presentation renderer, package builder, and CLI.
 - `contracts/ave-light-render-recipe-1.0.0.schema.json` — generic four-region recipe contract.
 - `contracts/examples/synthetic-four-region-recipe.json` — lawful positive fixture with off periods, a constant pulse, ramps, and region divergence.
 - `contracts/vendor/lumenate/0.2.0/` — exact pinned protocol and evidence schemas plus their source manifest.
@@ -133,7 +166,7 @@ Individual operations:
 .venv/bin/python -m pytest -q
 ```
 
-The suite covers both renderers: semantic validation, incomplete-input rejection, deterministic hashes and pixels, interval boundaries and off behavior, accumulated phase and chunk continuity, duty gating, stereo routing, headroom and fades, independent visual regions, 60/120 Hz quantization, Forensics agreement evaluation, exact vendored hashes, Lumenate provenance preservation, and render manifests.
+The suite covers both renderers and the demo packager: semantic validation, incomplete-input rejection, deterministic hashes and pixels, interval boundaries and off behavior, accumulated phase and chunk continuity, smooth-envelope versus hard-gate behavior, duty gating, stereo routing, headroom and fades, independent visual regions, 60/120 Hz quantization, record-boundary enforcement, Forensics agreement evaluation, exact vendored hashes, Lumenate provenance preservation, and render manifests.
 
 ## Adapter boundary
 
@@ -159,5 +192,7 @@ The current empirical Vitality export intentionally contains null rendering para
 ## Output and repository policy
 
 Track source, tests, environment declarations, documentation, schemas, recipes, manifests, and small lawful fixtures. Do not track generated audio/video, virtual environments, caches, secrets, machine-specific configuration, or proprietary source media. The `output/` directory is retained with `.gitkeep`; its generated contents are ignored.
+
+For routine branch synchronization, `./sync_repo.sh "Commit message"` fetches and rebases the current branch, runs the Generator tests and staged whitespace checks, commits tracked source changes, and pushes to `origin`. Set `AVE_REMOTE` only when intentionally targeting another configured remote. `AVE_SKIP_TESTS=1` is an explicit escape hatch, not the default.
 
 See [AVE_PLATFORM_STATUS_AND_ROADMAP.md](AVE_PLATFORM_STATUS_AND_ROADMAP.md) for the broader platform assessment and music-generation roadmap.
