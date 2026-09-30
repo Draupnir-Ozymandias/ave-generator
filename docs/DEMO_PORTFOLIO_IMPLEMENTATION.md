@@ -51,6 +51,7 @@ audio/left.wav, audio/right.wav    channel-isolated files
 audio/stems/*.wav                  full-timeline construction stems
 presentation-video.silent.mp4      deterministic explanatory visuals
 presentation.mp4                   audio/video distribution preview
+multimodal-detector*.mp4           Demo 005 unlabeled AV clock-analysis pair
 generator-validation.json          same-repository integrity checks
 verification-request.json          blind-analysis request without declared values
 PACKAGE_README.md                   purpose, reproduction, limitations, safety
@@ -84,6 +85,8 @@ Generated media remains under ignored `output/`; source recipes, schemas, tests,
 
 For Demo 1, the detector phase receives only `audio/stereo.wav` and the `detector_input` portion of `verification-request.json`. Forensics records the exact input hash and persists duration, carrier, interchannel-difference, routing, and peak observations without loading expected values or tolerances. Only afterward does the comparison phase load `ave-demo-001-binaural-construction-declaration.json` by hash and return a versioned observation record plus field-level agreement report.
 
+For Demo 005, the authorized detector input is `multimodal-detector.mp4`. It muxes the rendered stereo master with a 60 fps text-free video whose two colored bars encode only the contemporaneous per-frame left/right RMS calculated on the same virtual clock. The verification request asks only for `clock_alignment` and explicitly attests that expected values, tolerances, target schedules, stage boundaries, and construction labels are absent. The labeled `presentation.mp4` is never the blind detector input.
+
 Generator can adopt that report as an immutable attachment in a later package revision. Until then, Demo 1 remains `exploratory`, even though Generator's own black-box checks pass.
 
 ### 2026-09-29 trial analysis
@@ -98,7 +101,7 @@ This confirms both the signal's basic analyzability and the remaining contract w
 - Demo 2 needs independent reconstruction of a time-varying smooth AM envelope.
 - Demo 3 needs an independent gate-rate, duty-cycle, and edge-shape observation contract.
 - Demo 4 needs a visual-plan analyzer or field-level comparison contract; it makes no calibrated-luminance or physical-device-equivalence claim.
-- Demo 5 should not be promoted until the three construction kinds can be classified independently by stage.
+- Demo 5 still depends on AVE Forensics independently comparing the newly authorized multimodal detector artifact and completing its clean-provenance stage/clock report.
 - Lumenate empirical exports remain optional provenance inputs. Null or incomplete device parameters are never filled by inference.
 
 ## Declaration mapping limitations

@@ -20,6 +20,7 @@ from . import __version__
 from .compiler import resolve_demo
 from .declaration import compile_declaration, declaration_mapping_report
 from .errors import DemoRecipeValidationError
+from .multimodal import render_audio_reactive_detector_video
 from .paths import PROJECT_ROOT
 from .presentation import render_presentation_video
 from .synthesis import synthesize_demo
@@ -168,6 +169,23 @@ def build_demo_package(recipe_path: Path, output_dir: Path) -> dict[str, Any]:
     )
     presentation_path = mux_av(silent_video, stereo_path, output_dir / "presentation.mp4")
 
+    multimodal_outputs: list[Path] = []
+    multimodal_detector_path: Path | None = None
+    if recipe["demo_id"] == "ave-demo-005-staged-av-comparison":
+        detector_video_path = output_dir / "multimodal-detector-video.silent.mp4"
+        render_audio_reactive_detector_video(
+            detector_video_path,
+            audio,
+            recipe["sample_rate_hz"],
+            recipe["fps"],
+        )
+        multimodal_detector_path = mux_av(
+            detector_video_path,
+            stereo_path,
+            output_dir / "multimodal-detector.mp4",
+        )
+        multimodal_outputs.extend([detector_video_path, multimodal_detector_path])
+
     light_outputs: list[Path] = []
     light_video_path: Path | None = None
     if recipe["visual"]["kind"] == "four_region":
@@ -190,14 +208,24 @@ def build_demo_package(recipe_path: Path, output_dir: Path) -> dict[str, Any]:
         detector_relative_path = detector_path.relative_to(output_dir).as_posix()
         detector_media_type = "video/mp4"
         request_type = "independent_blind_visual_analysis"
+        requested_observation_metrics = sorted({claim["metric"] for claim in declaration["claims"]})
+    elif recipe["demo_id"] == "ave-demo-005-staged-av-comparison":
+        if multimodal_detector_path is None:
+            raise RuntimeError("multimodal detector artifact was not rendered")
+        detector_path = multimodal_detector_path
+        detector_relative_path = detector_path.relative_to(output_dir).as_posix()
+        detector_media_type = "video/mp4"
+        request_type = "independent_blind_multimodal_analysis"
+        requested_observation_metrics = ["clock_alignment"]
     else:
         detector_path = stereo_path
         detector_relative_path = detector_path.relative_to(output_dir).as_posix()
         detector_media_type = "audio/wav"
         request_type = "independent_blind_audio_analysis"
+        requested_observation_metrics = sorted({claim["metric"] for claim in declaration["claims"]})
 
     verification_request = {
-        "request_version": "1.1.0",
+        "request_version": "1.2.0",
         "request_type": request_type,
         "demo_id": recipe["demo_id"],
         "demo_version": recipe["demo_version"],
@@ -209,8 +237,10 @@ def build_demo_package(recipe_path: Path, output_dir: Path) -> dict[str, Any]:
             "expected_values_present": False,
             "expected_tolerances_present": False,
             "target_schedules_present": False,
+            "stage_boundaries_present": False,
+            "construction_labels_present": False,
         },
-        "requested_observation_metrics": sorted({claim["metric"] for claim in declaration["claims"]}),
+        "requested_observation_metrics": requested_observation_metrics,
         "workflow": [
             "Record and verify the detector_input artifact SHA-256.",
             "Run detectors without loading the declaration's targets or tolerances.",
@@ -236,7 +266,7 @@ def build_demo_package(recipe_path: Path, output_dir: Path) -> dict[str, Any]:
 
     material_outputs = [
         recipe_copy, resolved_path, declaration_path, mapping_path, stereo_path, left_path, right_path,
-        *stem_paths, silent_video, presentation_path, *light_outputs,
+        *stem_paths, silent_video, presentation_path, *multimodal_outputs, *light_outputs,
         validation_path, request_path, readme_path,
     ]
     output_records = [_relative_output(path, output_dir) for path in material_outputs]

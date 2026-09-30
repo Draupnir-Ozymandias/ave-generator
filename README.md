@@ -29,6 +29,8 @@ Every package contains the source recipe, resolved protocol, schema-valid Platfo
 
 The Platform declaration `0.1.0` schema is vendored with its exact SHA-256. Detector requests contain the artifact hash and requested metrics but no expected values or tolerances. The declaration is loaded only in the post-observation comparison phase.
 
+Demo 005 additionally publishes `multimodal-detector.mp4`: the rendered stereo master muxed with an unlabeled, audio-reactive video generated on the same virtual clock. Its pixels encode contemporaneous left/right RMS only. It contains no text, stage boundaries, construction labels, targets, or tolerances and exists solely for blind audio-to-video clock analysis; it is not an exposure-ready presentation.
+
 All tracked recipes currently carry the conservative `exploratory` evidence-maturity label. Only an attached independent report and explicit field-level adjudication can support promotion to `partially_verified` or `verified`. See [docs/DEMO_PORTFOLIO_IMPLEMENTATION.md](docs/DEMO_PORTFOLIO_IMPLEMENTATION.md) for the package contract, status, and cross-repository handoff.
 
 ## Corrected audio baseline

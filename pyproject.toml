@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ave-light-renderer"
-version = "0.2.0"
+version = "0.3.0"
 description = "Deterministic offline four-region light renderer for AVE Generator"
 requires-python = ">=3.11"
 dependencies = [

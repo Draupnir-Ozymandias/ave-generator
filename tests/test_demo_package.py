@@ -35,6 +35,8 @@ def test_package_separates_declarations_checks_and_external_observations(tmp_pat
     assert request["detector_input"]["expected_values_present"] is False
     assert request["detector_input"]["expected_tolerances_present"] is False
     assert request["detector_input"]["target_schedules_present"] is False
+    assert request["detector_input"]["stage_boundaries_present"] is False
+    assert request["detector_input"]["construction_labels_present"] is False
     assert "carrier_frequency_hz" in request["requested_observation_metrics"]
     assert request["comparison_after_observation"]["do_not_load_before_evidence_is_persisted"] is True
 
@@ -73,3 +75,42 @@ def test_four_region_package_uses_target_free_rendered_video_for_detection(tmp_p
     serialized_request = str(request)
     for claim in declaration["claims"]:
         assert str(claim["target"]) not in serialized_request
+
+
+def test_staged_package_uses_unlabeled_muxed_av_for_clock_detection(tmp_path, monkeypatch):
+    def fake_render(path, *_args, **_kwargs):
+        Path(path).write_bytes(b"rendered-video")
+        return Path(path)
+
+    def fake_mux(_video, _audio, output):
+        Path(output).write_bytes(b"muxed-av")
+        return Path(output)
+
+    monkeypatch.setattr(package_module, "render_presentation_video", fake_render)
+    monkeypatch.setattr(package_module, "render_audio_reactive_detector_video", fake_render)
+    monkeypatch.setattr(package_module, "mux_av", fake_mux)
+    target = tmp_path / "ave-demo-005-staged-av-comparison"
+    package_module.build_demo_package(
+        DEMO_RECIPE_DIR / "ave-demo-005-staged-av-comparison.json", target
+    )
+    request = load_json(target / "verification-request.json")
+    manifest = load_json(target / "render-manifest.json")
+
+    assert request["request_type"] == "independent_blind_multimodal_analysis"
+    assert request["detector_input"]["path"] == "multimodal-detector.mp4"
+    assert request["detector_input"]["media_type"] == "video/mp4"
+    assert request["detector_input"]["sha256"] == file_sha256(target / "multimodal-detector.mp4")
+    assert request["requested_observation_metrics"] == ["clock_alignment"]
+    assert request["detector_input"]["expected_values_present"] is False
+    assert request["detector_input"]["expected_tolerances_present"] is False
+    assert request["detector_input"]["target_schedules_present"] is False
+    assert request["detector_input"]["stage_boundaries_present"] is False
+    assert request["detector_input"]["construction_labels_present"] is False
+    serialized = str(request)
+    assert "transition_time_seconds" not in serialized
+    assert "binaural_construction" not in serialized
+    assert "smooth_amplitude_modulation" not in serialized
+    assert "hard_gated_pulse" not in serialized
+    output_paths = {item["path"] for item in manifest["outputs"]}
+    assert "multimodal-detector-video.silent.mp4" in output_paths
+    assert "multimodal-detector.mp4" in output_paths
