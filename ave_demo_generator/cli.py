@@ -12,6 +12,7 @@ from .compiler import resolve_demo
 from .declaration import compile_declaration
 from .package import build_demo_package
 from .paths import DEMO_RECIPE_DIR, PROJECT_ROOT
+from .promotion import promote_demo_package, promote_portfolio
 from .validation import validate_demo_recipe
 
 
@@ -56,6 +57,16 @@ def command_build(args: argparse.Namespace) -> int:
     return 0
 
 
+def command_promote(args: argparse.Namespace) -> int:
+    _print(promote_demo_package(args.package_dir, args.agreement_report))
+    return 0
+
+
+def command_promote_all(args: argparse.Namespace) -> int:
+    _print(promote_portfolio(args.packages_root, args.reports_root))
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
         prog="ave-demo-generator",
@@ -71,6 +82,28 @@ def build_parser() -> argparse.ArgumentParser:
     build.add_argument("recipe")
     build.add_argument("--output-dir", type=Path, help="must end with the stable demo ID; defaults to output/demos/<demo_id>")
     build.set_defaults(func=command_build)
+    promote = subparsers.add_parser(
+        "promote",
+        help="promote one built package with a canonical AVE Forensics agreement report",
+    )
+    promote.add_argument("--package-dir", type=Path, required=True)
+    promote.add_argument("--agreement-report", type=Path, required=True)
+    promote.set_defaults(func=command_promote)
+    promote_all = subparsers.add_parser(
+        "promote-all",
+        help="promote all five built portfolio packages with canonical reports",
+    )
+    promote_all.add_argument(
+        "--packages-root",
+        type=Path,
+        default=PROJECT_ROOT / "output" / "demos",
+    )
+    promote_all.add_argument(
+        "--reports-root",
+        type=Path,
+        default=PROJECT_ROOT.parent / "ave_forensics" / "artifacts" / "demo-portfolio",
+    )
+    promote_all.set_defaults(func=command_promote_all)
     return parser
 
 
