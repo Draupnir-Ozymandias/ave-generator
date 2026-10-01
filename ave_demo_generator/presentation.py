@@ -137,12 +137,80 @@ def _card_for_time(t: float, duration: float) -> str:
     return "provenance"
 
 
-def render_presentation_video(path: Path, recipe: dict[str, Any], resolved: dict[str, Any], git_version: str, size: tuple[int, int] = (960, 540)) -> None:
+def _verification_pages(agreement: dict[str, Any]) -> list[tuple[str, list[str]]]:
+    report = agreement["report"]
+    results = report["claim_results"]
+    counts = {
+        state: sum(result["state"] == state for result in results)
+        for state in ("agree", "unsupported", "not_evaluated", "disagree", "invalid_declaration")
+    }
+    pages: list[tuple[str, list[str]]] = [
+        (
+            "INDEPENDENT AGREEMENT",
+            [
+                f"Canonical label: {report['evidence_label'].upper()}",
+                f"agree {counts['agree']}  ·  unsupported {counts['unsupported']}  ·  not evaluated {counts['not_evaluated']}",
+                f"disagree {counts['disagree']}  ·  invalid declaration {counts['invalid_declaration']}",
+            ],
+        )
+    ]
+    agreed = [result["claim_id"] for result in results if result["state"] == "agree"]
+    for offset in range(0, len(agreed), 6):
+        pages.append(("SUPPORTED FIELDS", agreed[offset : offset + 6]))
+    unresolved = [
+        f"{result['state']}: {result['claim_id']} — {result['reason']}"
+        for result in results
+        if result["state"] != "agree"
+    ]
+    if unresolved:
+        pages.append(("UNSUPPORTED OR UNRESOLVED", unresolved))
+    return pages
+
+
+def _draw_verification_card(
+    draw: ImageDraw.ImageDraw,
+    agreement: dict[str, Any] | None,
+    label: str,
+    t: float,
+    duration: float,
+    width: int,
+) -> None:
+    if agreement is None:
+        draw.text((52, 112), "VERIFICATION STATE", font=_font(34, True), fill=TEXT)
+        body = (
+            f"Evidence maturity: {label.upper()}\n\nGenerator build checks are attached. "
+            "Independent AVE Forensics observations and field-level agreement remain separate records."
+        )
+        _write_wrapped(draw, body, (55, 185), width - 110, _font(24), MUTED, 13)
+        return
+
+    pages = _verification_pages(agreement)
+    position = min(0.999999, max(0.0, (t / duration - 0.68) / 0.12))
+    title, lines = pages[min(len(pages) - 1, int(position * len(pages)))]
+    draw.text((52, 98), title, font=_font(31, True), fill=TEXT)
+    y = 155
+    for line in lines:
+        y = _write_wrapped(draw, line, (58, y), width - 116, _font(18), MUTED, 6) + 5
+    draw.text((58, 475), "Forensics observation and Generator declaration remain separate records.", font=_font(15), fill=WARNING)
+
+
+def render_presentation_video(
+    path: Path,
+    recipe: dict[str, Any],
+    resolved: dict[str, Any],
+    git_version: str,
+    size: tuple[int, int] = (960, 540),
+    agreement: dict[str, Any] | None = None,
+) -> None:
     """Render silent explanatory frames. Audio muxing is a packaging concern."""
     width, height = size
     fps = int(resolved["fps"])
     duration = float(resolved["duration_seconds"])
-    label = recipe["verification"]["evidence_maturity"]
+    label = (
+        agreement["report"]["evidence_label"]
+        if agreement is not None
+        else recipe["verification"]["evidence_maturity"]
+    )
     writer = imageio.get_writer(
         path,
         fps=fps,
@@ -186,15 +254,15 @@ def render_presentation_video(path: Path, recipe: dict[str, Any], resolved: dict
             elif card == "live":
                 _draw_live_panel(draw, resolved, t, (42, 82, width - 42, height - 68))
             elif card == "verification":
-                draw.text((52, 112), "VERIFICATION STATE", font=_font(34, True), fill=TEXT)
-                body = f"Evidence maturity: {label.upper()}\n\nGenerator build checks are attached. Independent AVE Forensics observations and field-level agreement remain separate records."
-                _write_wrapped(draw, body, (55, 185), width - 110, _font(24), MUTED, 13)
+                _draw_verification_card(draw, agreement, label, t, duration, width)
             elif card == "boundary":
                 draw.text((52, 105), "BOUNDARIES", font=_font(34, True), fill=WARNING)
                 _write_wrapped(draw, "Engineering demonstration only. Use headphones only if appropriate for the declared stereo construction. Stop if uncomfortable. No calibrated sound level, neurological entrainment, therapeutic outcome, or safety claim.", (55, 178), width - 110, _font(23), TEXT, 12)
             else:
                 draw.text((52, 105), "REPRODUCIBLE PROVENANCE", font=_font(34, True), fill=TEXT)
                 details = f"Declaration\n{recipe['demo_id']}@{recipe['demo_version']}\n\nRecipe SHA-256\n{resolved['recipe_canonical_sha256']}\n\nResolved plan SHA-256\n{resolved['resolved_plan_sha256']}\n\nGenerator Git\n{git_version}"
+                if agreement is not None:
+                    details += f"\n\nForensics report SHA-256\n{agreement['report_sha256']}"
                 _write_wrapped(draw, details, (55, 165), width - 110, _font(19), MUTED, 8)
 
             progress = max(2, int((frame_index + 1) / resolved["frame_count"] * (width - 84)))
