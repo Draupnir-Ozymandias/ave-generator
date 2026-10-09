@@ -1,0 +1,8 @@
+{
+  "contract": "ave-demo-agreement-report",
+  "schema_version": "0.1.0",
+  "source_owner": "AVE Platform",
+  "source_path": "contracts/ave-demo-agreement-report-0.1.0.schema.json",
+  "source_sha256": "f4a2ce98dc407b0aa7f40dcfc636de98e6c8d498feda84ecec9e5b3a36292315",
+  "vendored_on": "2026-10-01"
+}

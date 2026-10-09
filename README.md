@@ -31,7 +31,19 @@ The Platform declaration `0.1.0` schema is vendored with its exact SHA-256. Dete
 
 Demo 005 additionally publishes `multimodal-detector.mp4`: the rendered stereo master muxed with an unlabeled, audio-reactive video generated on the same virtual clock. Its pixels encode contemporaneous left/right RMS only. It contains no text, stage boundaries, construction labels, targets, or tolerances and exists solely for blind audio-to-video clock analysis; it is not an exposure-ready presentation.
 
-All tracked recipes currently carry the conservative `exploratory` evidence-maturity label. Only an attached independent report and explicit field-level adjudication can support promotion to `partially_verified` or `verified`. See [docs/DEMO_PORTFOLIO_IMPLEMENTATION.md](docs/DEMO_PORTFOLIO_IMPLEMENTATION.md) for the package contract, status, and cross-repository handoff.
+Tracked recipes retain their original conservative `exploratory` authoring label so the declarations and detector inputs analyzed by Forensics remain immutable. Release promotion is a separate overlay: it validates a canonical report against the exact pinned Platform agreement schema, checks package/declaration/artifact identity, independently derives the report label, preserves the detector-input hash, and then refreshes only public presentation and package records.
+
+Promote one package, or all five canonical packages:
+
+```bash
+.venv/bin/python -m ave_demo_generator promote \
+  --package-dir output/demos/ave-demo-001-binaural-construction \
+  --agreement-report ../ave_forensics/artifacts/demo-portfolio/ave-demo-001-binaural-construction/agreement-report.json
+
+.venv/bin/python -m ave_demo_generator promote-all
+```
+
+Promotion requires a clean Generator worktree and clean Forensics provenance. It attaches the exact agreement report, writes `release-record.json`, replaces the public verification/provenance cards, and updates the final manifest with exact claim states and promoted hashes. It refuses schema, identity, declaration, claim-set, evidence-label, artifact, or detector-input drift. See [docs/DEMO_PORTFOLIO_IMPLEMENTATION.md](docs/DEMO_PORTFOLIO_IMPLEMENTATION.md) for the package contract, status, and cross-repository handoff.
 
 ## Corrected audio baseline
 
@@ -82,7 +94,7 @@ AVE Generator owns the recipe, compiler, virtual frame plan, renderer, and rende
 Key paths:
 
 - `contracts/ave-demo-recipe-1.1.0.schema.json` — Generator portfolio recipe contract with stable demo identity and separate semantic version.
-- `contracts/vendor/ave-platform/0.1.0/` — exact pinned Platform declaration schema and source manifest.
+- `contracts/vendor/ave-platform/0.1.0/` — exact pinned Platform declaration and agreement-report schemas plus source manifests.
 - `contracts/examples/demos/` — the five stable-ID portfolio recipes.
 - `ave_demo_generator/` — declaration compiler/validator, deterministic demo synthesis, presentation renderer, package builder, and CLI.
 - `contracts/ave-light-render-recipe-1.0.0.schema.json` — generic four-region recipe contract.
@@ -166,7 +178,7 @@ Individual operations:
 .venv/bin/python -m pytest -q
 ```
 
-The suite covers both renderers and the demo packager: semantic validation, incomplete-input rejection, deterministic hashes and pixels, interval boundaries and off behavior, accumulated phase and chunk continuity, smooth-envelope versus hard-gate behavior, duty gating, stereo routing, headroom and fades, independent visual regions, 60/120 Hz quantization, record-boundary enforcement, Forensics agreement evaluation, exact vendored hashes, Lumenate provenance preservation, and render manifests.
+The suite covers both renderers and the demo packager: semantic validation, incomplete-input rejection, deterministic hashes and pixels, interval boundaries and off behavior, accumulated phase and chunk continuity, smooth-envelope versus hard-gate behavior, duty gating, stereo routing, headroom and fades, independent visual regions, 60/120 Hz quantization, record-boundary enforcement, exact Platform agreement ingestion and label derivation, detector-input preservation, exact vendored hashes, Lumenate provenance preservation, and render manifests.
 
 ## Adapter boundary
 
