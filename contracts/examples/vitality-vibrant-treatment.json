@@ -1,0 +1,21 @@
+{
+  "treatment_version": "1.0.0",
+  "treatment_id": "vitality-vibrant-clockwise-pulse-highlight-v1",
+  "base_recipe": "contracts/examples/vitality-matched-four-region-300s.json",
+  "base_recipe_sha256": "ad17b27b1f70c5bc797ba517ac315497a8bea81db6f07c3eb7cd268226bd9508",
+  "reference_media": "output/four-region-repro/four-region-preview.mp4",
+  "reference_media_sha256": "e168b28756061651f13f67bdaf96ff7b0c943171d4d522e205010847951f9cfc",
+  "clockwise_order": ["top_left", "top_right", "bottom_right", "bottom_left"],
+  "palette_rgb": [[255, 80, 20], [40, 160, 255], [220, 80, 255], [120, 255, 80]],
+  "intensity": 1.0,
+  "highlight_white_mix": 0.45,
+  "rotation": "advance_one_quadrant_per_analytic_pulse_cycle",
+  "pulse_gate_policy": "preserve_base_recipe",
+  "evidence_maturity": "exploratory",
+  "limitations": [
+    "Colors, intensity and clockwise highlight are synthetic Generator choices, not captured Lumenate regional behavior.",
+    "One rotation spans four analytic pulses. Missed video gates still advance analytic highlight phase.",
+    "No duty clamping; short pulses can be absent in frame-sampled video.",
+    "Full software intensity is not calibrated luminance or an exposure-safety assertion."
+  ]
+}

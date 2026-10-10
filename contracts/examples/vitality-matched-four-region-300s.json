@@ -1,0 +1,3388 @@
+{
+  "schema_version": "1.0.0",
+  "recipe_id": "vitality-matched-four-region-300s-v1",
+  "renderer_version": "0.1.0",
+  "source": {
+    "kind": "other",
+    "source_id": "lumenate-reviewed-vitality-replication-2026-10-10",
+    "sha256": "12fdba74698043a4b2e67bd9f00c8926eaeed3380b8c58e9f8b1360e15dd86c2",
+    "source_path": "lumenate_nova_forensics/FOUR_REGION_REPLICATION.md",
+    "catalog_sha256": "30be884b53cc48087500bcefca4721898f78357e99d246ec66bbaf4b76ab4f8c",
+    "evidence_maturity": "exploratory",
+    "mapping": "Human-reviewed transcription of the 34-interval declared and commanded schedule; no generic prose parsing or null inference.",
+    "generator_choices": {
+      "intensity": 0.25,
+      "color": "white",
+      "phase": "continuous across adjacent active intervals; reset after off",
+      "layout": "four equal square regions with black gutters",
+      "refresh_hz": 120
+    }
+  },
+  "clock": {
+    "kind": "monotonic_virtual",
+    "unit": "us",
+    "origin_us": 0
+  },
+  "duration_us": 300000000,
+  "output": {
+    "color_mode": "grayscale",
+    "background_rgb": [
+      0,
+      0,
+      0
+    ]
+  },
+  "safety": {
+    "offline_only": true,
+    "photosensitivity_warning": "WARNING: flashing light; photosensitivity risk. Offline engineering artifact, no exposure-safety claim. Do not autoplay.",
+    "calibrated_intensity": false
+  },
+  "regions": [
+    {
+      "name": "top_left",
+      "intervals": [
+        {
+          "interval_id": "top_left-segment-01",
+          "kind": "off",
+          "start_us": 0,
+          "end_us": 1500000
+        },
+        {
+          "interval_id": "top_left-segment-02",
+          "kind": "pulse",
+          "start_us": 1500000,
+          "end_us": 5000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 7.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.01,
+            "end": 0.2
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "reset",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_left-segment-03",
+          "kind": "pulse",
+          "start_us": 5000000,
+          "end_us": 15000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 7.5,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.2,
+            "end": 0.15
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_left-segment-04",
+          "kind": "pulse",
+          "start_us": 15000000,
+          "end_us": 26000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 7.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.15,
+            "end": 0.2
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_left-segment-05",
+          "kind": "pulse",
+          "start_us": 26000000,
+          "end_us": 35000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 7.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.2,
+            "end": 0.15
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_left-segment-06",
+          "kind": "pulse",
+          "start_us": 35000000,
+          "end_us": 37000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 7.5,
+            "end": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.15,
+            "end": 0.2
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_left-segment-07",
+          "kind": "pulse",
+          "start_us": 37000000,
+          "end_us": 56000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "constant",
+            "value": 0.2
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_left-segment-08",
+          "kind": "pulse",
+          "start_us": 56000000,
+          "end_us": 58000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.2,
+            "end": 0.25
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_left-segment-09",
+          "kind": "pulse",
+          "start_us": 58000000,
+          "end_us": 78000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.25,
+            "end": 0.3
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_left-segment-10",
+          "kind": "pulse",
+          "start_us": 78000000,
+          "end_us": 87000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 10.5,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.3,
+            "end": 0.4
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_left-segment-11",
+          "kind": "pulse",
+          "start_us": 87000000,
+          "end_us": 92000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 7.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.4,
+            "end": 0.1
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_left-segment-12",
+          "kind": "pulse",
+          "start_us": 92000000,
+          "end_us": 101000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 7.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.1,
+            "end": 0.3
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_left-segment-13",
+          "kind": "pulse",
+          "start_us": 101000000,
+          "end_us": 111000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 7.5,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.3,
+            "end": 0.15
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_left-segment-14",
+          "kind": "pulse",
+          "start_us": 111000000,
+          "end_us": 121000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 7.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.15,
+            "end": 0.3
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_left-segment-15",
+          "kind": "pulse",
+          "start_us": 121000000,
+          "end_us": 131000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 7.5,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.3,
+            "end": 0.2
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_left-segment-16",
+          "kind": "pulse",
+          "start_us": 131000000,
+          "end_us": 141000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 7.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.2,
+            "end": 0.4
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_left-segment-17",
+          "kind": "pulse",
+          "start_us": 141000000,
+          "end_us": 151000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 7.5,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.4,
+            "end": 0.3
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_left-segment-18",
+          "kind": "pulse",
+          "start_us": 151000000,
+          "end_us": 160300000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.3,
+            "end": 0.4
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_left-segment-19",
+          "kind": "pulse",
+          "start_us": 160300000,
+          "end_us": 161000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.4,
+            "end": 0.5
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_left-segment-20",
+          "kind": "pulse",
+          "start_us": 161000000,
+          "end_us": 167000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.5,
+            "end": 0.2
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_left-segment-21",
+          "kind": "pulse",
+          "start_us": 167000000,
+          "end_us": 171000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.2,
+            "end": 0.4
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_left-segment-22",
+          "kind": "pulse",
+          "start_us": 171000000,
+          "end_us": 177000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.4,
+            "end": 0.01
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_left-segment-23",
+          "kind": "pulse",
+          "start_us": 177000000,
+          "end_us": 205000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.01,
+            "end": 0.45
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_left-segment-24",
+          "kind": "pulse",
+          "start_us": 205000000,
+          "end_us": 210000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 10.5,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.45,
+            "end": 0.2
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_left-segment-25",
+          "kind": "pulse",
+          "start_us": 210000000,
+          "end_us": 214000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 7
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.2,
+            "end": 0.3
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_left-segment-26",
+          "kind": "pulse",
+          "start_us": 214000000,
+          "end_us": 217000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 7,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.3,
+            "end": 0.4
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_left-segment-27",
+          "kind": "pulse",
+          "start_us": 217000000,
+          "end_us": 220000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 7
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.4,
+            "end": 0.5
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_left-segment-28",
+          "kind": "pulse",
+          "start_us": 220000000,
+          "end_us": 222000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 7,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.5,
+            "end": 0.55
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_left-segment-29",
+          "kind": "pulse",
+          "start_us": 222000000,
+          "end_us": 224000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.55,
+            "end": 0.65
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_left-segment-30",
+          "kind": "pulse",
+          "start_us": 224000000,
+          "end_us": 230000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.65,
+            "end": 0.15
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_left-segment-31",
+          "kind": "pulse",
+          "start_us": 230000000,
+          "end_us": 253000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.15,
+            "end": 0.05
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_left-segment-32",
+          "kind": "pulse",
+          "start_us": 253000000,
+          "end_us": 279000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 10.5,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.05,
+            "end": 0.3
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_left-segment-33",
+          "kind": "pulse",
+          "start_us": 279000000,
+          "end_us": 298000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.3,
+            "end": 0.01
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_left-segment-34",
+          "kind": "off",
+          "start_us": 298000000,
+          "end_us": 300000000
+        }
+      ]
+    },
+    {
+      "name": "top_right",
+      "intervals": [
+        {
+          "interval_id": "top_right-segment-01",
+          "kind": "off",
+          "start_us": 0,
+          "end_us": 1500000
+        },
+        {
+          "interval_id": "top_right-segment-02",
+          "kind": "pulse",
+          "start_us": 1500000,
+          "end_us": 5000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 7.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.01,
+            "end": 0.2
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "reset",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_right-segment-03",
+          "kind": "pulse",
+          "start_us": 5000000,
+          "end_us": 15000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 7.5,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.2,
+            "end": 0.15
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_right-segment-04",
+          "kind": "pulse",
+          "start_us": 15000000,
+          "end_us": 26000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 7.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.15,
+            "end": 0.2
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_right-segment-05",
+          "kind": "pulse",
+          "start_us": 26000000,
+          "end_us": 35000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 7.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.2,
+            "end": 0.15
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_right-segment-06",
+          "kind": "pulse",
+          "start_us": 35000000,
+          "end_us": 37000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 7.5,
+            "end": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.15,
+            "end": 0.2
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_right-segment-07",
+          "kind": "pulse",
+          "start_us": 37000000,
+          "end_us": 56000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "constant",
+            "value": 0.2
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_right-segment-08",
+          "kind": "pulse",
+          "start_us": 56000000,
+          "end_us": 58000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.2,
+            "end": 0.25
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_right-segment-09",
+          "kind": "pulse",
+          "start_us": 58000000,
+          "end_us": 78000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.25,
+            "end": 0.3
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_right-segment-10",
+          "kind": "pulse",
+          "start_us": 78000000,
+          "end_us": 87000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 10.5,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.3,
+            "end": 0.4
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_right-segment-11",
+          "kind": "pulse",
+          "start_us": 87000000,
+          "end_us": 92000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 7.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.4,
+            "end": 0.1
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_right-segment-12",
+          "kind": "pulse",
+          "start_us": 92000000,
+          "end_us": 101000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 7.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.1,
+            "end": 0.3
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_right-segment-13",
+          "kind": "pulse",
+          "start_us": 101000000,
+          "end_us": 111000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 7.5,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.3,
+            "end": 0.15
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_right-segment-14",
+          "kind": "pulse",
+          "start_us": 111000000,
+          "end_us": 121000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 7.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.15,
+            "end": 0.3
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_right-segment-15",
+          "kind": "pulse",
+          "start_us": 121000000,
+          "end_us": 131000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 7.5,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.3,
+            "end": 0.2
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_right-segment-16",
+          "kind": "pulse",
+          "start_us": 131000000,
+          "end_us": 141000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 7.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.2,
+            "end": 0.4
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_right-segment-17",
+          "kind": "pulse",
+          "start_us": 141000000,
+          "end_us": 151000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 7.5,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.4,
+            "end": 0.3
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_right-segment-18",
+          "kind": "pulse",
+          "start_us": 151000000,
+          "end_us": 160300000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.3,
+            "end": 0.4
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_right-segment-19",
+          "kind": "pulse",
+          "start_us": 160300000,
+          "end_us": 161000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.4,
+            "end": 0.5
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_right-segment-20",
+          "kind": "pulse",
+          "start_us": 161000000,
+          "end_us": 167000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.5,
+            "end": 0.2
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_right-segment-21",
+          "kind": "pulse",
+          "start_us": 167000000,
+          "end_us": 171000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.2,
+            "end": 0.4
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_right-segment-22",
+          "kind": "pulse",
+          "start_us": 171000000,
+          "end_us": 177000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.4,
+            "end": 0.01
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_right-segment-23",
+          "kind": "pulse",
+          "start_us": 177000000,
+          "end_us": 205000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.01,
+            "end": 0.45
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_right-segment-24",
+          "kind": "pulse",
+          "start_us": 205000000,
+          "end_us": 210000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 10.5,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.45,
+            "end": 0.2
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_right-segment-25",
+          "kind": "pulse",
+          "start_us": 210000000,
+          "end_us": 214000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 7
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.2,
+            "end": 0.3
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_right-segment-26",
+          "kind": "pulse",
+          "start_us": 214000000,
+          "end_us": 217000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 7,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.3,
+            "end": 0.4
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_right-segment-27",
+          "kind": "pulse",
+          "start_us": 217000000,
+          "end_us": 220000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 7
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.4,
+            "end": 0.5
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_right-segment-28",
+          "kind": "pulse",
+          "start_us": 220000000,
+          "end_us": 222000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 7,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.5,
+            "end": 0.55
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_right-segment-29",
+          "kind": "pulse",
+          "start_us": 222000000,
+          "end_us": 224000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.55,
+            "end": 0.65
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_right-segment-30",
+          "kind": "pulse",
+          "start_us": 224000000,
+          "end_us": 230000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.65,
+            "end": 0.15
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_right-segment-31",
+          "kind": "pulse",
+          "start_us": 230000000,
+          "end_us": 253000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.15,
+            "end": 0.05
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_right-segment-32",
+          "kind": "pulse",
+          "start_us": 253000000,
+          "end_us": 279000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 10.5,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.05,
+            "end": 0.3
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_right-segment-33",
+          "kind": "pulse",
+          "start_us": 279000000,
+          "end_us": 298000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.3,
+            "end": 0.01
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "top_right-segment-34",
+          "kind": "off",
+          "start_us": 298000000,
+          "end_us": 300000000
+        }
+      ]
+    },
+    {
+      "name": "bottom_left",
+      "intervals": [
+        {
+          "interval_id": "bottom_left-segment-01",
+          "kind": "off",
+          "start_us": 0,
+          "end_us": 1500000
+        },
+        {
+          "interval_id": "bottom_left-segment-02",
+          "kind": "pulse",
+          "start_us": 1500000,
+          "end_us": 5000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 7.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.01,
+            "end": 0.2
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "reset",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_left-segment-03",
+          "kind": "pulse",
+          "start_us": 5000000,
+          "end_us": 15000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 7.5,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.2,
+            "end": 0.15
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_left-segment-04",
+          "kind": "pulse",
+          "start_us": 15000000,
+          "end_us": 26000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 7.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.15,
+            "end": 0.2
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_left-segment-05",
+          "kind": "pulse",
+          "start_us": 26000000,
+          "end_us": 35000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 7.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.2,
+            "end": 0.15
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_left-segment-06",
+          "kind": "pulse",
+          "start_us": 35000000,
+          "end_us": 37000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 7.5,
+            "end": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.15,
+            "end": 0.2
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_left-segment-07",
+          "kind": "pulse",
+          "start_us": 37000000,
+          "end_us": 56000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "constant",
+            "value": 0.2
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_left-segment-08",
+          "kind": "pulse",
+          "start_us": 56000000,
+          "end_us": 58000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.2,
+            "end": 0.25
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_left-segment-09",
+          "kind": "pulse",
+          "start_us": 58000000,
+          "end_us": 78000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.25,
+            "end": 0.3
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_left-segment-10",
+          "kind": "pulse",
+          "start_us": 78000000,
+          "end_us": 87000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 10.5,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.3,
+            "end": 0.4
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_left-segment-11",
+          "kind": "pulse",
+          "start_us": 87000000,
+          "end_us": 92000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 7.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.4,
+            "end": 0.1
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_left-segment-12",
+          "kind": "pulse",
+          "start_us": 92000000,
+          "end_us": 101000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 7.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.1,
+            "end": 0.3
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_left-segment-13",
+          "kind": "pulse",
+          "start_us": 101000000,
+          "end_us": 111000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 7.5,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.3,
+            "end": 0.15
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_left-segment-14",
+          "kind": "pulse",
+          "start_us": 111000000,
+          "end_us": 121000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 7.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.15,
+            "end": 0.3
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_left-segment-15",
+          "kind": "pulse",
+          "start_us": 121000000,
+          "end_us": 131000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 7.5,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.3,
+            "end": 0.2
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_left-segment-16",
+          "kind": "pulse",
+          "start_us": 131000000,
+          "end_us": 141000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 7.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.2,
+            "end": 0.4
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_left-segment-17",
+          "kind": "pulse",
+          "start_us": 141000000,
+          "end_us": 151000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 7.5,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.4,
+            "end": 0.3
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_left-segment-18",
+          "kind": "pulse",
+          "start_us": 151000000,
+          "end_us": 160300000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.3,
+            "end": 0.4
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_left-segment-19",
+          "kind": "pulse",
+          "start_us": 160300000,
+          "end_us": 161000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.4,
+            "end": 0.5
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_left-segment-20",
+          "kind": "pulse",
+          "start_us": 161000000,
+          "end_us": 167000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.5,
+            "end": 0.2
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_left-segment-21",
+          "kind": "pulse",
+          "start_us": 167000000,
+          "end_us": 171000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.2,
+            "end": 0.4
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_left-segment-22",
+          "kind": "pulse",
+          "start_us": 171000000,
+          "end_us": 177000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.4,
+            "end": 0.01
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_left-segment-23",
+          "kind": "pulse",
+          "start_us": 177000000,
+          "end_us": 205000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.01,
+            "end": 0.45
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_left-segment-24",
+          "kind": "pulse",
+          "start_us": 205000000,
+          "end_us": 210000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 10.5,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.45,
+            "end": 0.2
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_left-segment-25",
+          "kind": "pulse",
+          "start_us": 210000000,
+          "end_us": 214000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 7
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.2,
+            "end": 0.3
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_left-segment-26",
+          "kind": "pulse",
+          "start_us": 214000000,
+          "end_us": 217000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 7,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.3,
+            "end": 0.4
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_left-segment-27",
+          "kind": "pulse",
+          "start_us": 217000000,
+          "end_us": 220000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 7
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.4,
+            "end": 0.5
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_left-segment-28",
+          "kind": "pulse",
+          "start_us": 220000000,
+          "end_us": 222000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 7,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.5,
+            "end": 0.55
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_left-segment-29",
+          "kind": "pulse",
+          "start_us": 222000000,
+          "end_us": 224000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.55,
+            "end": 0.65
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_left-segment-30",
+          "kind": "pulse",
+          "start_us": 224000000,
+          "end_us": 230000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.65,
+            "end": 0.15
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_left-segment-31",
+          "kind": "pulse",
+          "start_us": 230000000,
+          "end_us": 253000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.15,
+            "end": 0.05
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_left-segment-32",
+          "kind": "pulse",
+          "start_us": 253000000,
+          "end_us": 279000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 10.5,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.05,
+            "end": 0.3
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_left-segment-33",
+          "kind": "pulse",
+          "start_us": 279000000,
+          "end_us": 298000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.3,
+            "end": 0.01
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_left-segment-34",
+          "kind": "off",
+          "start_us": 298000000,
+          "end_us": 300000000
+        }
+      ]
+    },
+    {
+      "name": "bottom_right",
+      "intervals": [
+        {
+          "interval_id": "bottom_right-segment-01",
+          "kind": "off",
+          "start_us": 0,
+          "end_us": 1500000
+        },
+        {
+          "interval_id": "bottom_right-segment-02",
+          "kind": "pulse",
+          "start_us": 1500000,
+          "end_us": 5000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 7.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.01,
+            "end": 0.2
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "reset",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_right-segment-03",
+          "kind": "pulse",
+          "start_us": 5000000,
+          "end_us": 15000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 7.5,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.2,
+            "end": 0.15
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_right-segment-04",
+          "kind": "pulse",
+          "start_us": 15000000,
+          "end_us": 26000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 7.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.15,
+            "end": 0.2
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_right-segment-05",
+          "kind": "pulse",
+          "start_us": 26000000,
+          "end_us": 35000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 7.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.2,
+            "end": 0.15
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_right-segment-06",
+          "kind": "pulse",
+          "start_us": 35000000,
+          "end_us": 37000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 7.5,
+            "end": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.15,
+            "end": 0.2
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_right-segment-07",
+          "kind": "pulse",
+          "start_us": 37000000,
+          "end_us": 56000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "constant",
+            "value": 0.2
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_right-segment-08",
+          "kind": "pulse",
+          "start_us": 56000000,
+          "end_us": 58000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.2,
+            "end": 0.25
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_right-segment-09",
+          "kind": "pulse",
+          "start_us": 58000000,
+          "end_us": 78000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.25,
+            "end": 0.3
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_right-segment-10",
+          "kind": "pulse",
+          "start_us": 78000000,
+          "end_us": 87000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 10.5,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.3,
+            "end": 0.4
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_right-segment-11",
+          "kind": "pulse",
+          "start_us": 87000000,
+          "end_us": 92000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 7.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.4,
+            "end": 0.1
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_right-segment-12",
+          "kind": "pulse",
+          "start_us": 92000000,
+          "end_us": 101000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 7.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.1,
+            "end": 0.3
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_right-segment-13",
+          "kind": "pulse",
+          "start_us": 101000000,
+          "end_us": 111000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 7.5,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.3,
+            "end": 0.15
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_right-segment-14",
+          "kind": "pulse",
+          "start_us": 111000000,
+          "end_us": 121000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 7.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.15,
+            "end": 0.3
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_right-segment-15",
+          "kind": "pulse",
+          "start_us": 121000000,
+          "end_us": 131000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 7.5,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.3,
+            "end": 0.2
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_right-segment-16",
+          "kind": "pulse",
+          "start_us": 131000000,
+          "end_us": 141000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 7.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.2,
+            "end": 0.4
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_right-segment-17",
+          "kind": "pulse",
+          "start_us": 141000000,
+          "end_us": 151000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 7.5,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.4,
+            "end": 0.3
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_right-segment-18",
+          "kind": "pulse",
+          "start_us": 151000000,
+          "end_us": 160300000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.3,
+            "end": 0.4
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_right-segment-19",
+          "kind": "pulse",
+          "start_us": 160300000,
+          "end_us": 161000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.4,
+            "end": 0.5
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_right-segment-20",
+          "kind": "pulse",
+          "start_us": 161000000,
+          "end_us": 167000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.5,
+            "end": 0.2
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_right-segment-21",
+          "kind": "pulse",
+          "start_us": 167000000,
+          "end_us": 171000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.2,
+            "end": 0.4
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_right-segment-22",
+          "kind": "pulse",
+          "start_us": 171000000,
+          "end_us": 177000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.4,
+            "end": 0.01
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_right-segment-23",
+          "kind": "pulse",
+          "start_us": 177000000,
+          "end_us": 205000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.01,
+            "end": 0.45
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_right-segment-24",
+          "kind": "pulse",
+          "start_us": 205000000,
+          "end_us": 210000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 10.5,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.45,
+            "end": 0.2
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_right-segment-25",
+          "kind": "pulse",
+          "start_us": 210000000,
+          "end_us": 214000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 7
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.2,
+            "end": 0.3
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_right-segment-26",
+          "kind": "pulse",
+          "start_us": 214000000,
+          "end_us": 217000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 7,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.3,
+            "end": 0.4
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_right-segment-27",
+          "kind": "pulse",
+          "start_us": 217000000,
+          "end_us": 220000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 7
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.4,
+            "end": 0.5
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_right-segment-28",
+          "kind": "pulse",
+          "start_us": 220000000,
+          "end_us": 222000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 7,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.5,
+            "end": 0.55
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_right-segment-29",
+          "kind": "pulse",
+          "start_us": 222000000,
+          "end_us": 224000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.55,
+            "end": 0.65
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_right-segment-30",
+          "kind": "pulse",
+          "start_us": 224000000,
+          "end_us": 230000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.65,
+            "end": 0.15
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_right-segment-31",
+          "kind": "pulse",
+          "start_us": 230000000,
+          "end_us": 253000000,
+          "frequency_hz": {
+            "kind": "constant",
+            "value": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.15,
+            "end": 0.05
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_right-segment-32",
+          "kind": "pulse",
+          "start_us": 253000000,
+          "end_us": 279000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 10.5,
+            "end": 13.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.05,
+            "end": 0.3
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_right-segment-33",
+          "kind": "pulse",
+          "start_us": 279000000,
+          "end_us": 298000000,
+          "frequency_hz": {
+            "kind": "linear",
+            "start": 13.5,
+            "end": 10.5
+          },
+          "duty_cycle": {
+            "kind": "linear",
+            "start": 0.3,
+            "end": 0.01
+          },
+          "intensity": {
+            "kind": "constant",
+            "value": 0.25
+          },
+          "color": {
+            "mode": "grayscale",
+            "value": 255
+          },
+          "phase_policy": "continuous",
+          "phase_origin_cycles": 0
+        },
+        {
+          "interval_id": "bottom_right-segment-34",
+          "kind": "off",
+          "start_us": 298000000,
+          "end_us": 300000000
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Declared and commanded frequency/duty endpoints; optical evidence only corroborates bounded frequency and matched timing.",
+    "Synthetic white grayscale, intensity 0.25, phase policy/origin and layout; physical brightness, duty and subframe phase are unknown.",
+    "120 fps sampling may omit short gates or represent them as full frames; duty is not clamped.",
+    "No neurological entrainment, therapy, safety, calibrated luminance, latency or Nova-equivalence claim."
+  ]
+}

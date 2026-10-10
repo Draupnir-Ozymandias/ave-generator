@@ -1,0 +1,24 @@
+{
+  "treatment_version": "1.0.0",
+  "treatment_id": "vitality-single-square-white-pulses-v1",
+  "base_recipe": "contracts/examples/vitality-matched-four-region-300s.json",
+  "base_recipe_sha256": "ad17b27b1f70c5bc797ba517ac315497a8bea81db6f07c3eb7cd268226bd9508",
+  "layout": "single_full_square_no_gutters",
+  "on_rgb": [255, 255, 255],
+  "off_rgb": [0, 0, 0],
+  "source_off_rgb": [0, 0, 0],
+  "on_state": "pulse_on_white",
+  "off_state": "pulse_off_black",
+  "video_filename": "single-square-white-300s.mp4",
+  "software_intensity": 1.0,
+  "refresh_hz": 120,
+  "size_px": 640,
+  "evidence_maturity": "exploratory",
+  "contact_caption": "WARNING: FLASHING WHITE LIGHT. STATIC REVIEW ONLY. Original pulse gates; synthetic full-intensity white square.",
+  "readme_text": "# WARNING: flashing white light; do not autoplay\n\nSingle full 640x640 square, no gutters/quadrants/audio. Exactly 300 seconds at 120 fps.\nWhite [255,255,255] during original Vitality pulse ON; black during pulse OFF.\nSource off intervals 0-1.5s and 298-300s stay black. Original frequency, duty and accumulated phase are retained.\nSoftware intensity 1.0 is uncalibrated; short pulses may be missed at 120 fps. No duty clamp.\nExploratory engineering render; no safety, physiological, therapeutic or Nova-equivalence claim.\n",
+  "limitations": [
+    "Single-square geometry and full software intensity are Generator choices, not a calibrated physical Nova reproduction.",
+    "120 fps frame sampling may omit short pulses; original duty is not increased.",
+    "No exposure-safety, physiological or therapeutic claim."
+  ]
+}

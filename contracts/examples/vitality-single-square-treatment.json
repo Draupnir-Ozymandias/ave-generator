@@ -1,0 +1,20 @@
+{
+  "treatment_version": "1.0.0",
+  "treatment_id": "vitality-single-square-green-magenta-v1",
+  "base_recipe": "contracts/examples/vitality-matched-four-region-300s.json",
+  "base_recipe_sha256": "ad17b27b1f70c5bc797ba517ac315497a8bea81db6f07c3eb7cd268226bd9508",
+  "layout": "single_full_square_no_gutters",
+  "on_rgb": [0, 255, 0],
+  "off_rgb": [255, 0, 255],
+  "source_off_rgb": [0, 0, 0],
+  "software_intensity": 1.0,
+  "refresh_hz": 120,
+  "size_px": 640,
+  "evidence_maturity": "exploratory",
+  "limitations": [
+    "Green/magenta switching replaces the active pulse black off-state with magenta; this is a synthetic color treatment, not optical blackout reproduction.",
+    "Full software intensity is uncalibrated and does not establish exposure safety.",
+    "Frame sampling may omit very short green gates; original duty is not clamped.",
+    "No physiological, therapeutic, safety or Nova-equivalence claim."
+  ]
+}
